@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
-import LoginForm from '../components/LoginForm/LoginForm'
+import LoginForm from '../../components/LoginForm/LoginForm'
+
+import './Login.css';
 
 export default class Login extends Component {
 	
@@ -7,7 +9,8 @@ export default class Login extends Component {
 		super(props);
 		this.state = {
 			email: '',
-			password: ''
+			password: '',
+			laoding: false
 		}
 	}
 	
@@ -16,13 +19,22 @@ export default class Login extends Component {
 			[event.target.name]: event.target.value
 		});
 	}
+	
+	submit = ( event ) => {
+		event.preventDefault();
+		this.setState({
+			loading: true
+		});
+	}
 
 	render () {
 		return (
-			<div className="container">
+			<div className="container-fluid" id="loginBG">
 				<div className="row justify-content-center">
-					<div className="col-4 mt-5">
+					<div className="col-lg-4 col-md-6 mt-5">
 						<LoginForm
+							submit={this.submit}
+							loading={this.state.loading}
 							onChangeHandler={this.onChangeHandler} />
 					</div>
 				</div>

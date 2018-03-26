@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import SignupForm from '../components/SignupForm/SignupForm'
+import SignupForm from '../../components/SignupForm/SignupForm'
 
 export default class Login extends Component {
 	
@@ -11,7 +11,8 @@ export default class Login extends Component {
 			email: '',
 			username: '',
 			password: '',
-			confirmation: ''
+			confirmation: '',
+			loading: false
 		}
 	}
 
@@ -19,6 +20,13 @@ export default class Login extends Component {
 		const name = event.target.name;
 		this.setState({
 			[name]: event.target.value
+		});
+	}
+	
+	onSubmit = ( event ) => {
+		event.preventDefault();
+		this.setState({
+			loading: true
 		});
 	}
 
@@ -32,6 +40,8 @@ export default class Login extends Component {
 							firstname={this.state.firstname}
 							email={this.state.email}
 							username={this.state.username}
+							submit={this.onSubmit}
+							loading={this.state.loading}
 							onChangeHandler={this.onChangeHandler} />
 					</div>
 				</div>
