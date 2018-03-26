@@ -1,11 +1,12 @@
 import React from 'react'
+import Button from '../Utils/Button';
 import { Link } from 'react-router-dom'
 
 const SignupForm = ( props ) => (
 	<form className="card p-4" onSubmit={props.submit} >
 		<h2 className="text-center mb-2">Inscription</h2>
 		<div className="row">
-			<div className="col-lg-6">
+			<div className="col-lg-6 col-md-6">
 				<div className="form-group">
 					<label htmlFor="name">Nom :</label>
 					<input
@@ -40,7 +41,7 @@ const SignupForm = ( props ) => (
 						disabled={props.loading} />
 				</div>
 			</div>
-			<div className="col-lg-6">
+			<div className="col-lg-6 col-md-6">
 				<div className="form-group">
 					<label htmlFor="username">Nom d'utilisateur :</label>
 					<input
@@ -77,9 +78,7 @@ const SignupForm = ( props ) => (
 		<div className="row">
 			<div className="col text-center">
 				<Link to="/login" className="btn btn-sm btn-link">J'ai déjà un compte</Link><br />
-				<button className="btn btn-primary mt-2" disabled={props.loading}>
-					{(props.loading)?<span><i className="fas fa-circle-notch fa-spin"></i> En cours...</span>:'S\'inscrire'}
-				</button>
+				<Button loading={props.loading} text="S'inscrire" />
 			</div>
 		</div>
 	</form>

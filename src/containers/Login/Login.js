@@ -31,7 +31,7 @@ export default class Login extends Component {
 		return (
 			<div className="container-fluid" id="loginBG">
 				<div className="row justify-content-center">
-					<div className="col-lg-4 col-md-6 mt-5">
+					<div className="col-lg-4 col-md-6 my-5">
 						<LoginForm
 							submit={this.submit}
 							loading={this.state.loading}

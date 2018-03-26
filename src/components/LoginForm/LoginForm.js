@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Button from '../Utils/Button';
 
 import './LoginForm.css';
 
@@ -29,9 +30,7 @@ const LoginForm = ( props ) => {
 			</div>
 			<Link to="/reset" className="btn btn-sm btn-link">J'ai oublié mon mot de passe</Link>
 			<div className="form-group text-center">
-				<button className="btn btn-primary mt-2" disabled={props.loading} >
-					{(props.loading)?<span><i className="fas fa-circle-notch fa-spin"></i> En cours...</span>:'Se connecter'}
-				</button>
+				<Button loading={props.loading} text="Se connecter" />
 			</div>
 		</form>
 	)

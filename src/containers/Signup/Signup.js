@@ -34,7 +34,7 @@ export default class Login extends Component {
 		return (
 			<div className="container">
 				<div className="row justify-content-center">
-					<div className="col-8 mt-5">
+					<div className="col-lg-8 col-md-10 col-sm-12 my-5">
 						<SignupForm
 							name={this.state.name}
 							firstname={this.state.firstname}
