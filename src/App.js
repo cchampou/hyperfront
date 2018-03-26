@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-import Login from './containers/Login';
 import Header from './components/Header/Header'
+
+import Login from './containers/Login';
+import Signup from './containers/Signup';
 
 class App extends Component {
 	render() {
@@ -12,6 +14,7 @@ class App extends Component {
 				<Header />
 					<Switch>
 						<Route path="/login" exact component={Login} />
+						<Route path="/signup" exact component={Signup} />
 					</Switch>
 				</div>
 			</BrowserRouter>

@@ -1,19 +1,24 @@
 import React, { Component } from 'react'
-import LoginForm from '../components/LoginForm/LoginForm'
+import SignupForm from '../components/SignupForm/SignupForm'
 
 export default class Login extends Component {
 	
 	constructor(props) {
 		super(props);
 		this.state = {
+			name: '',
+			firstname: '',
 			email: '',
-			password: ''
+			username: '',
+			password: '',
+			confirmation: ''
 		}
 	}
-	
+
 	onChangeHandler = ( event ) => {
+		const name = event.target.name;
 		this.setState({
-			[event.target.name]: event.target.value
+			[name]: event.target.value
 		});
 	}
 
@@ -21,8 +26,12 @@ export default class Login extends Component {
 		return (
 			<div className="container">
 				<div className="row justify-content-center">
-					<div className="col-4 mt-5">
-						<LoginForm
+					<div className="col-8 mt-5">
+						<SignupForm
+							name={this.state.name}
+							firstname={this.state.firstname}
+							email={this.state.email}
+							username={this.state.username}
 							onChangeHandler={this.onChangeHandler} />
 					</div>
 				</div>
