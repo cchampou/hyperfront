@@ -29,6 +29,7 @@ const LoginForm = ( props ) => {
 					className="form-control"/>
 			</div>
 			<Link to="/reset" className="btn btn-sm btn-link">J'ai oublié mon mot de passe</Link>
+			<Link to="/signup" className="btn btn-sm btn-link">Je n'ai pas encore de compte</Link>
 			<div className="form-group text-center">
 				<Button loading={props.loading} text="Se connecter" />
 			</div>

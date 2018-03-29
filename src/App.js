@@ -6,6 +6,7 @@ import Header from './components/Header/Header'
 
 import Login from './containers/Login/Login';
 import Signup from './containers/Signup/Signup';
+import Reset from './containers/Reset/Reset';
 
 import './App.css';
 
@@ -16,6 +17,7 @@ const App = () => (
 				<Switch>
 					<Route path="/login" exact component={Login} />
 					<Route path="/signup" exact component={Signup} />
+					<Route path="/reset" exact component={Reset} />
 				</Switch>
 			</div>
 		</BrowserRouter>
