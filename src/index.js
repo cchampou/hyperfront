@@ -9,10 +9,12 @@ import registerServiceWorker from './registerServiceWorker';
 
 import loginReducer from './store/reducers/login';
 import signupReducer from './store/reducers/signup';
+import resetPassReducer from './store/reducers/resetPass';
 
 const rootReducer = combineReducers({
 	login: loginReducer,
-	signup: signupReducer
+	signup: signupReducer,
+	resetPass: resetPassReducer
 })
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

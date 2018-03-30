@@ -31,7 +31,7 @@ const LoginForm = ( props ) => {
 					onChange={props.onChangeHandler}
 					className="form-control"/>
 			</div>
-			<Link to="/reset" className="btn btn-sm btn-link">J'ai oublié mon mot de passe</Link>
+			<Link to="/resetpass" className="btn btn-sm btn-link">J'ai oublié mon mot de passe</Link>
 			<Link to="/signup" className="btn btn-sm btn-link">Je n'ai pas encore de compte</Link>
 			<div className="form-group text-center">
 				<Button loading={props.data.loading} text="Se connecter" />
