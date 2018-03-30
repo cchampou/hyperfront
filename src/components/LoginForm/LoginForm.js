@@ -6,32 +6,35 @@ import './LoginForm.css';
 
 const LoginForm = ( props ) => {
 	return (
-		<form className="card p-4" onSubmit={props.submit} id="loginForm">
+		<form className="card p-4" onSubmit={(e) => { e.preventDefault(); props.submit(props.data); }} id="loginForm">
 			<h2 className="text-center mb-2">Connexion</h2>
+			{props.data.failed && <p className="alert alert-danger">Nom d'utilisateur ou mot de passe incorrect</p>}
 			<div className="form-group">
-				<label htmlFor="email">Adresse email :</label>
+				<label htmlFor="username">Nom d'utilisateur :</label>
 				<input
-					type="email"
-					id="email"
-					name="email"
-					onChange={props.emailChangeHandler}
+					value={props.data.username}
+					type="text"
+					id="username"
+					name="username"
+					onChange={props.onChangeHandler}
 					className="form-control"
-					disabled={props.loading} />
+					disabled={props.data.loading} />
 			</div>
 			<div className="form-group">
 				<label htmlFor="password">Mot de passe :</label>
 				<input
+					value={props.data.password}
 					type="password"
 					id="password"
 					name="password"
-					disabled={props.loading}
-					onChange={props.passwordChangeHandler}
+					disabled={props.data.loading}
+					onChange={props.onChangeHandler}
 					className="form-control"/>
 			</div>
 			<Link to="/reset" className="btn btn-sm btn-link">J'ai oublié mon mot de passe</Link>
 			<Link to="/signup" className="btn btn-sm btn-link">Je n'ai pas encore de compte</Link>
 			<div className="form-group text-center">
-				<Button loading={props.loading} text="Se connecter" />
+				<Button loading={props.data.loading} text="Se connecter" />
 			</div>
 		</form>
 	)

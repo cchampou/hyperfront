@@ -1,29 +1,34 @@
-import React, { Component } from 'react'
-import LoginForm from '../../components/LoginForm/LoginForm'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
+import { login, loginReset } from '../../store/actions/actions';
+
+import LoginForm from '../../components/LoginForm/LoginForm';
 
 import './Login.css';
 
-export default class Login extends Component {
-	
+class Login extends Component {
+
 	constructor(props) {
 		super(props);
 		this.state = {
-			email: '',
-			password: '',
-			laoding: false
+			data: props.data
 		}
 	}
-	
+
+	componentDidMount() {
+		this.props.reset();
+	}
+
+	componentWillReceiveProps(next) {
+		this.setState({
+			data: next.data
+		})
+	}
+
 	onChangeHandler = ( event ) => {
 		this.setState({
-			[event.target.name]: event.target.value
-		});
-	}
-	
-	submit = ( event ) => {
-		event.preventDefault();
-		this.setState({
-			loading: true
+			data: { ...this.state.data, [event.target.name]: event.target.value }
 		});
 	}
 
@@ -33,8 +38,8 @@ export default class Login extends Component {
 				<div className="row justify-content-center">
 					<div className="col-lg-4 col-md-6 my-5">
 						<LoginForm
-							submit={this.submit}
-							loading={this.state.loading}
+							submit={this.props.login}
+							data={this.state.data}
 							onChangeHandler={this.onChangeHandler} />
 					</div>
 				</div>
@@ -42,3 +47,18 @@ export default class Login extends Component {
 		)
 	}
 }
+
+const mapStateToProps = state => {
+	return {
+		data: state.login
+	}
+}
+
+const mapDispatchToProps = dispatch => {
+	return {
+		login: (data) => dispatch(login(data)),
+		reset: () => dispatch(loginReset())
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
