@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { login, loginReset } from '../../store/actions/actions';
+import { login, loginReset } from '../../store/actions/login';
 
 import LoginForm from '../../components/LoginForm/LoginForm';
 

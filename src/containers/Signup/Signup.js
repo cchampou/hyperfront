@@ -1,8 +1,13 @@
 import React, { Component } from 'react'
+
+import { connect } from 'react-redux';
+
+import { signup, reset } from '../../store/actions/signup'
+
 import SignupForm from '../../components/SignupForm/SignupForm'
 
-export default class Login extends Component {
-	
+class Signup extends Component {
+
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -12,21 +17,19 @@ export default class Login extends Component {
 			username: '',
 			password: '',
 			confirmation: '',
+			error: '',
 			loading: false
 		}
 	}
 
-	onChangeHandler = ( event ) => {
-		const name = event.target.name;
-		this.setState({
-			[name]: event.target.value
-		});
+	componentWillReceiveProps(next) {
+		console.log(next.data);
+		this.setState(next.data)
 	}
-	
-	onSubmit = ( event ) => {
-		event.preventDefault();
+
+	onChangeHandler = ( event ) => {
 		this.setState({
-			loading: true
+			[event.target.name]: event.target.value
 		});
 	}
 
@@ -36,12 +39,8 @@ export default class Login extends Component {
 				<div className="row justify-content-center">
 					<div className="col-lg-8 col-md-10 col-sm-12 my-5">
 						<SignupForm
-							name={this.state.name}
-							firstname={this.state.firstname}
-							email={this.state.email}
-							username={this.state.username}
-							submit={this.onSubmit}
-							loading={this.state.loading}
+							data={this.state}
+							submit={this.props.signup}
 							onChangeHandler={this.onChangeHandler} />
 					</div>
 				</div>
@@ -49,3 +48,18 @@ export default class Login extends Component {
 		)
 	}
 }
+
+const mapStateToProps = state => {
+	return {
+		data : state.signup
+	}
+}
+
+const mapDispatchToProps = dispatch => {
+	return {
+		signup: (data) => dispatch(signup(data)),
+		reset: () => dispatch(reset())
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Signup);
