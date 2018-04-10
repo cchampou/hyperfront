@@ -10,10 +10,22 @@ const Header = ( props ) => (
 		<div className="collapse navbar-collapse" id="navbarNav">
 			<ul className="navbar-nav ml-auto">
 				<li className="nav-item active">
+					<Link className="nav-link" to="/lang">FR</Link>
+				</li>
+				<li className="nav-item active">
+					<Link className="nav-link" to="/search">Rechercher</Link>
+				</li>
+				<li className="nav-item active">
+					<Link className="nav-link" to="/account">Mon compte</Link>
+				</li>
+				<li className="nav-item active">
 					<Link className="nav-link" to="/login">Se connecter</Link>
 				</li>
 				<li className="nav-item active">
 					<Link className="nav-link" to="/signup">S'inscrire</Link>
+				</li>
+				<li className="nav-item active">
+					<Link className="nav-link" to="/logout">Se deconnecter</Link>
 				</li>
 			</ul>
 		</div>

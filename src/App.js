@@ -6,6 +6,8 @@ import Footer from './components/Footer/Footer'
 
 import Login from './containers/Login/Login';
 import Signup from './containers/Signup/Signup';
+import Search from './containers/Search/Search';
+import Account from './containers/Account/Account';
 import ResetPass from './containers/ResetPass/ResetPass';
 
 import './App.css';
@@ -16,6 +18,8 @@ const App = () => (
 				<Header />
 				<Switch>
 					<Route path="/login" exact component={Login} />
+					<Route path="/search" exact component={Search} />
+					<Route path="/account" exact component={Account} />
 					<Route path="/signup" exact component={Signup} />
 					<Route path="/resetpass" exact component={ResetPass} />
 				</Switch>
