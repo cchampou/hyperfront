@@ -4,7 +4,8 @@ const initialState = {
 	username : '',
 	password : '',
 	loading: false,
-	failed : false
+	failed : false,
+	success : false
 }
 
 const reducer = (state = initialState, action) => {
@@ -23,7 +24,16 @@ const reducer = (state = initialState, action) => {
 				...state,
 				password: '',
 				loading: false,
-				failed: true
+				failed: true,
+				success: false
+			}
+		case actions.LOGIN_SUCCESS:
+			return {
+				...state,
+				password: '',
+				loading: false,
+				success: true,
+				failed: false
 			}
 		case actions.LOGIN_RESET:
 			return {

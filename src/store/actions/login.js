@@ -6,10 +6,11 @@ export const LOGIN_RESET = 'LOGIN_RESET';
 
 export const login = (data) => {
 	return dispatch => {
-		dispatch({ type : LOGIN, data : data });
-		setTimeout(() => {
+		if (data.username === 'cchampou' && data.password === 'b8gt5k98c') {
+			dispatch({ type : LOGIN, data : data })
+		} else {
 			dispatch(loginFailed());
-		}, 3000);
+		}
 	}
 }
 

@@ -9,6 +9,7 @@ const LoginForm = ( props ) => {
 		<form className="card p-4" onSubmit={(e) => { e.preventDefault(); props.submit(props.data); }} id="loginForm">
 			<h2 className="text-center mb-2">Connexion</h2>
 			{props.data.failed && <p className="alert alert-danger">Nom d'utilisateur ou mot de passe incorrect</p>}
+			{props.data.success && <p className="alert alert-success">OK</p>}
 			<div className="form-group">
 				<label htmlFor="username">Nom d'utilisateur :</label>
 				<input
