@@ -41,6 +41,17 @@ const SignupForm = ( props ) => (
 						className="form-control"
 						disabled={props.data.loading} />
 				</div>
+				<div className="form-group">
+					<label htmlFor="profilePic">Photo de profil :</label>
+					<input
+						type="file"
+						className="form-control"
+						id="profilePic"
+						name="profilePic"
+						onChange={props.onChangeHandler}
+						disabled={props.data.loading}
+						/>
+				</div>
 			</div>
 			<div className="col-lg-6 col-md-6">
 				<div className="form-group">

@@ -8,7 +8,6 @@ export function* loginSaga(action) {
 		type : actionTypes.LOGIN,
 		data : action.data
 	});
-
 	if (!action.data || !action.data.username || !action.data.password) {
 		yield put({
 			type: actionTypes.LOGIN_FAILED,

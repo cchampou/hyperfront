@@ -1,33 +1,15 @@
 
-export const SIGNUP = 'SIGNUP';
-export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
-export const SIGNUP_FAILED = 'SIGNUP_FAILED';
-export const SIGNUP_RESET = 'SIGNUP_RESET';
+import * as actionTypes from './actionTypes'
 
-export const signup = (data) => {
-	return dispatch => {
-		dispatch({ type : SIGNUP, data : data });
-		setTimeout(() => {
-			dispatch(signupFailed("Une erreur est survenue"));
-		}, 3000);
-	}
-}
-
-export const signupSuccess = () => {
+export const signupProcess = (data) => {
 	return {
-		type: SIGNUP_SUCCESS
-	}
-}
-
-export const signupFailed = (err) => {
-	return {
-		type: SIGNUP_FAILED,
-		err : err
+		type : actionTypes.SIGNUP_PROCESS,
+		data : data
 	}
 }
 
 export const reset = () => {
 	return {
-		type : SIGNUP_RESET
+		type : actionTypes.SIGNUP_RESET
 	}
 }

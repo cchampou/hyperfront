@@ -12,7 +12,7 @@ import loginReducer from './store/reducers/login';
 import signupReducer from './store/reducers/signup';
 import resetPassReducer from './store/reducers/resetPass';
 
-import { loginWatcher } from './store/sagas';
+import { authWatcher } from './store/sagas';
 
 const rootReducer = combineReducers({
 	login: loginReducer,
@@ -29,7 +29,7 @@ const store = createStore(
 	composeEnhancers(applyMiddleware(thunk, sagaMiddleware))
 );
 
-sagaMiddleware.run(loginWatcher);
+sagaMiddleware.run(authWatcher);
 
 ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
 registerServiceWorker();

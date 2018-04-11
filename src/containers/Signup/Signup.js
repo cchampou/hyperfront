@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 import { connect } from 'react-redux';
 
-import { signup, reset } from '../../store/actions/signup'
+import { signupProcess, reset } from '../../store/actions/signup'
 
 import SignupForm from '../../components/SignupForm/SignupForm'
 
@@ -17,13 +17,13 @@ class Signup extends Component {
 			username: '',
 			password: '',
 			confirmation: '',
+			file: '',
 			error: '',
 			loading: false
 		}
 	}
 
 	componentWillReceiveProps(next) {
-		console.log(next.data);
 		this.setState(next.data)
 	}
 
@@ -57,7 +57,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
 	return {
-		signup: (data) => dispatch(signup(data)),
+		signup: (data) => dispatch(signupProcess(data)),
 		reset: () => dispatch(reset())
 	}
 }

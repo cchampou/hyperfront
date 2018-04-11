@@ -1,4 +1,4 @@
-import * as actions from '../actions/signup';
+import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
 	name: '',
@@ -14,7 +14,7 @@ const initialState = {
 const reducer = ( state = initialState, action) => {
 
 	switch (action.type) {
-		case actions.SIGNUP:
+		case actionTypes.SIGNUP:
 			return {
 				...state,
 				loading: true,
@@ -26,7 +26,7 @@ const reducer = ( state = initialState, action) => {
 				password: action.data.password,
 				confirmation: action.data.confirmation
 			}
-		case actions.SIGNUP_FAILED:
+		case actionTypes.SIGNUP_FAILED:
 			return {
 				...state,
 				error: action.err,
@@ -34,12 +34,12 @@ const reducer = ( state = initialState, action) => {
 				confirmation: '',
 				loading: false
 			}
-		case actions.SIGNUP_SUCCESS:
+		case actionTypes.SIGNUP_SUCCESS:
 			return {
 				...state,
 				loading: false
 			}
-		case actions.SIGNUP_RESET:
+		case actionTypes.SIGNUP_RESET:
 			return  {
 				...state,
 				name: '',
