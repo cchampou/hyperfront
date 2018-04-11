@@ -33,7 +33,7 @@ class Account extends Component {
 		return (
 			<div className="container-fluid" id="loginBG">
 				<div className="row justify-content-center">
-					<div className="col-lg-6 col-md-6 my-5">
+					<div className="col-lg-8 col-md-8 col-sm-10 my-5">
 						<AccountForm />
 					</div>
 				</div>
