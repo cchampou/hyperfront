@@ -1,5 +1,8 @@
 import { put } from 'redux-saga/effects';
 import { delay } from 'redux-saga';
+import axios from 'axios';
+
+import * as config from '../../config.js';
 
 import * as actionTypes from '../actions/actionTypes'
 
@@ -14,15 +17,18 @@ export function* loginSaga(action) {
 			err: 'Veuillez renseigner tous les champs'
 		});
 	} else {
-		yield delay(2000);
-		if (action.data.username === 'cchampou' && action.data.password === 'b8gt5k98c') {
+		try {
+			const res = yield axios.post(config.api_url+'/auth/local', {
+				username : action.data.username,
+				password : action.data.password
+			});
 			yield put({
 				type : actionTypes.LOGIN_SUCCESS
 			});
-		} else {
+		} catch (err) {
 			yield put({
 				type : actionTypes.LOGIN_FAILED,
-				err: 'Nom d\'utilisateur ou mot de passe incorrect'
+				err: err.toString()
 			});
 		}
 	}
