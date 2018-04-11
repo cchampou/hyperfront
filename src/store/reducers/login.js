@@ -1,4 +1,4 @@
-import * as actions from '../actions/login';
+import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
 	username : '',
@@ -11,7 +11,7 @@ const initialState = {
 const reducer = (state = initialState, action) => {
 
 	switch (action.type) {
-		case actions.LOGIN:
+		case actionTypes.LOGIN:
 			return {
 				...state,
 				username: action.data.username,
@@ -19,15 +19,15 @@ const reducer = (state = initialState, action) => {
 				loading: true,
 				failed: false
 			}
-		case actions.LOGIN_FAILED:
+		case actionTypes.LOGIN_FAILED:
 			return {
 				...state,
 				password: '',
 				loading: false,
-				failed: true,
+				failed: action.err,
 				success: false
 			}
-		case actions.LOGIN_SUCCESS:
+		case actionTypes.LOGIN_SUCCESS:
 			return {
 				...state,
 				password: '',
@@ -35,7 +35,7 @@ const reducer = (state = initialState, action) => {
 				success: true,
 				failed: false
 			}
-		case actions.LOGIN_RESET:
+		case actionTypes.LOGIN_RESET:
 			return {
 				...state,
 				username: '',
