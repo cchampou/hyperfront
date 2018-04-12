@@ -28,7 +28,7 @@ const Header = ( props ) => (
 
 				{(props.isLoggedIn)?
 				<li className="nav-item active">
-					<a className="nav-link" onClick={props.logout} >Se deconnecter</a>
+					<Link to="/" className="nav-link" onClick={props.logout} >Se deconnecter</Link>
 				</li>:null}
 			</ul>
 		</div>
