@@ -21,3 +21,11 @@ export const SIGNUP_RESET = 'SIGNUP_RESET';
 
 export const LOG_USER_IN = 'LOG_USER_IN';
 export const LOG_USER_OUT = 'LOG_USER_OUT';
+
+// Play
+
+export const RESET_COMMENT = 'RESET_COMMENT';
+export const PROCESS_COMMENT = 'PROCESS_COMMENT';
+export const POST_COMMENT = 'POST_COMMENT';
+export const POST_COMMENT_SUCCESS = 'POST_COMMENT_SUCCESS';
+export const POST_COMMENT_FAILED = 'POST_COMMENT_FAILED';

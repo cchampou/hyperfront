@@ -12,14 +12,16 @@ import loginReducer from './store/reducers/login';
 import signupReducer from './store/reducers/signup';
 import resetPassReducer from './store/reducers/resetPass';
 import userReducer from './store/reducers/user';
+import playReducer from './store/reducers/play';
 
-import { authWatcher } from './store/sagas';
+import { sagaWatcher } from './store/sagas';
 
 const rootReducer = combineReducers({
 	login: loginReducer,
 	signup: signupReducer,
 	resetPass: resetPassReducer,
-	user: userReducer
+	user: userReducer,
+	play: playReducer
 });
 
 const sagaMiddleware = createSagaMiddleware();
@@ -31,7 +33,7 @@ const store = createStore(
 	composeEnhancers(applyMiddleware(thunk, sagaMiddleware))
 );
 
-sagaMiddleware.run(authWatcher);
+sagaMiddleware.run(sagaWatcher);
 
 ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
 registerServiceWorker();
