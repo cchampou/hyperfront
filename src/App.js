@@ -5,6 +5,7 @@ import Header from './components/Header/Header'
 import Footer from './components/Footer/Footer'
 
 import Search from './containers/Search/Search';
+import Play from './containers/Play/Play';
 import Login from './containers/Login/Login';
 import Signup from './containers/Signup/Signup';
 import Account from './containers/Account/Account';
@@ -18,6 +19,7 @@ const App = () => (
 				<Header />
 				<Switch>
 					<Route path="/" exact component={Search} />
+					<Route path="/play/:id" exact component={Play} />
 					<Route path="/login" exact component={Login} />
 					<Route path="/account" exact component={Account} />
 					<Route path="/signup" exact component={Signup} />

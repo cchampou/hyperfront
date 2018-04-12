@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
+import { Redirect } from 'react-router-dom'
 import FontAwesomeIcon from '@fortawesome/react-fontawesome'
 import faStar from '@fortawesome/fontawesome-free-solid/faStar'
 
 export default class Search extends Component {
 
 	state = {
+		selection: false,
 		search : '',
 		results : [
 			{
@@ -86,9 +88,14 @@ export default class Search extends Component {
 		this.setState({ search : e.target.value })
 	}
 
+	select = (id) => {
+		this.setState({ selection : id });
+	}
+
 	render () {
 		return (
 			<div className="container">
+				{(this.state.selection !== false) ? <Redirect to={'/play/'+this.state.selection} push={true} />:null}
 				<div className="col">
 					<div className="form-group my-4">
 						<input
@@ -99,7 +106,7 @@ export default class Search extends Component {
 					</div>
 					<div className="row justify-content-center">
 					{this.state.results.map((elem, key) => (
-						<div className="card m-2" style={{ width: '10rem', cursor: 'pointer' }} key={key} >
+						<div onClick={this.select.bind(this, key)} className="card m-2" style={{ width: '10rem', cursor: 'pointer' }} key={key} >
 							<img className="card-img-top" src={elem.cover} alt={elem.title} />
 							<div className="card-body">
 								<h5 className="card-title">{elem.title}</h5>
