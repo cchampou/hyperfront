@@ -41,7 +41,8 @@ const reducer = (state = initialState, action) => {
 				username: '',
 				password: '',
 				loading: false,
-				failed: false
+				failed: false,
+				success: false
 			}
 		default:
 			return state;

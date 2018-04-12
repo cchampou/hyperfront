@@ -1,5 +1,7 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+import * as actionTypes from '../../store/actions/actionTypes'
 
 const Header = ( props ) => (
 	<nav className="navbar navbar-expand-md navbar-dark bg-dark">
@@ -9,27 +11,40 @@ const Header = ( props ) => (
 		</button>
 		<div className="collapse navbar-collapse" id="navbarNav">
 			<ul className="navbar-nav ml-auto">
-				<li className="nav-item active">
-					<Link className="nav-link" to="/lang">FR</Link>
-				</li>
-				<li className="nav-item active">
-					<Link className="nav-link" to="/search">Rechercher</Link>
-				</li>
+				{(props.isLoggedIn)?
 				<li className="nav-item active">
 					<Link className="nav-link" to="/account">Mon compte</Link>
-				</li>
+				</li>:null}
+
+				{(!props.isLoggedIn)?
 				<li className="nav-item active">
 					<Link className="nav-link" to="/login">Se connecter</Link>
-				</li>
+				</li>:null}
+
+				{(!props.isLoggedIn)?
 				<li className="nav-item active">
 					<Link className="nav-link" to="/signup">S'inscrire</Link>
-				</li>
+				</li>:null}
+
+				{(props.isLoggedIn)?
 				<li className="nav-item active">
-					<Link className="nav-link" to="/logout">Se deconnecter</Link>
-				</li>
+					<a className="nav-link" onClick={props.logout} >Se deconnecter</a>
+				</li>:null}
 			</ul>
 		</div>
 	</nav>
 )
 
-export default Header;
+const mapStateToProps = state => {
+	return {
+		isLoggedIn : state.user.isLoggedIn
+	}
+}
+
+const mapDispatchToProps = dispatch => {
+	return {
+		logout: () => dispatch({ type : actionTypes.LOGOUT })
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

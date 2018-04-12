@@ -10,22 +10,19 @@ class Account extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			data: props.data
+			user: props.user
 		}
-	}
-
-	componentDidMount() {
 	}
 
 	componentWillReceiveProps(next) {
 		this.setState({
-			data: next.data
+			user: next.user
 		})
 	}
 
 	onChangeHandler = ( event ) => {
 		this.setState({
-			data: { ...this.state.data, [event.target.name]: event.target.value }
+			user: { ...this.state.user, [event.target.name]: event.target.value }
 		});
 	}
 
@@ -34,7 +31,7 @@ class Account extends Component {
 			<div className="container-fluid" id="loginBG">
 				<div className="row justify-content-center">
 					<div className="col-lg-8 col-md-8 col-sm-10 my-5">
-						<AccountForm />
+						<AccountForm data={this.state.user} />
 					</div>
 				</div>
 			</div>
@@ -44,7 +41,7 @@ class Account extends Component {
 
 const mapStateToProps = state => {
 	return {
-		data: state.login
+		user: state.user
 	}
 }
 

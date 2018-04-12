@@ -20,13 +20,13 @@ const AccountForm = (props) => (
 						name="profilePic" />
 				</div>
 				<div className="form-group">
-					<label htmlFor="email">Nom d'utilisateur :</label>
+					<label htmlFor="username">Nom d'utilisateur :</label>
 					<input
 						type="text"
 						className="form-control"
 						id="username"
 						name="username"
-						value={props.data} />
+						value={props.data.username} />
 				</div>
 			</div>
 			<div className="col-lg-6">
@@ -37,7 +37,7 @@ const AccountForm = (props) => (
 						className="form-control"
 						id="email"
 						name="email"
-						value={props.data} />
+						value={props.data.email} />
 				</div>
 				<div className="form-group">
 					<label htmlFor="email">Nouveau mot de passe :</label>
@@ -45,8 +45,7 @@ const AccountForm = (props) => (
 						type="password"
 						className="form-control"
 						id="password"
-						name="password"
-						value={props.data} />
+						name="password" />
 				</div>
 				<div className="form-group">
 					<label htmlFor="email">Confirmation mot de passe :</label>
@@ -54,8 +53,7 @@ const AccountForm = (props) => (
 						type="password"
 						className="form-control"
 						id="confirmation"
-						name="confirmation"
-						value={props.data} />
+						name="confirmation" />
 				</div>
 			</div>
 		</div>

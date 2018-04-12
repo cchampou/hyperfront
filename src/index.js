@@ -11,13 +11,15 @@ import registerServiceWorker from './registerServiceWorker';
 import loginReducer from './store/reducers/login';
 import signupReducer from './store/reducers/signup';
 import resetPassReducer from './store/reducers/resetPass';
+import userReducer from './store/reducers/user';
 
 import { authWatcher } from './store/sagas';
 
 const rootReducer = combineReducers({
 	login: loginReducer,
 	signup: signupReducer,
-	resetPass: resetPassReducer
+	resetPass: resetPassReducer,
+	user: userReducer
 });
 
 const sagaMiddleware = createSagaMiddleware();

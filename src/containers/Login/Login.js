@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom'
 
 import { login, loginReset } from '../../store/actions/login';
 
@@ -35,6 +36,7 @@ class Login extends Component {
 	render () {
 		return (
 			<div className="container-fluid" id="loginBG">
+				{this.props.isLoggedIn && <Redirect to="/" />}
 				<div className="row justify-content-center">
 					<div className="col-lg-4 col-md-6 my-5">
 						<LoginForm
@@ -50,7 +52,8 @@ class Login extends Component {
 
 const mapStateToProps = state => {
 	return {
-		data: state.login
+		data: state.login,
+		isLoggedIn : state.user.isLoggedIn
 	}
 }
 

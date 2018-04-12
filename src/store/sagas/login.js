@@ -1,5 +1,4 @@
 import { put } from 'redux-saga/effects';
-import { delay } from 'redux-saga';
 import axios from 'axios';
 
 import * as config from '../../config.js';
@@ -23,8 +22,13 @@ export function* loginSaga(action) {
 				password : action.data.password
 			});
 			yield put({
-				type : actionTypes.LOGIN_SUCCESS
+				type : actionTypes.LOG_USER_IN,
+				user : res.data
 			});
+			yield put({
+				type: actionTypes.LOGIN_LOCAL,
+				token: res.data.token
+			})
 		} catch (err) {
 			yield put({
 				type : actionTypes.LOGIN_FAILED,
@@ -32,4 +36,18 @@ export function* loginSaga(action) {
 			});
 		}
 	}
+}
+
+export function* loginLocal(action) {
+	yield localStorage.setItem('token', action.token);
+	yield put({
+		type : actionTypes.LOGIN_SUCCESS
+	});
+}
+
+export function* logout(action) {
+	yield localStorage.removeItem('token');
+	yield put({
+		type : actionTypes.LOG_USER_OUT
+	});
 }
