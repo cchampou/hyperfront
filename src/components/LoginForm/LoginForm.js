@@ -6,7 +6,7 @@ import './LoginForm.css';
 
 const LoginForm = ( props ) => {
 	return (
-		<form className="card p-4" onSubmit={(e) => { e.preventDefault(); props.submit(props.data); }} id="loginForm">
+		<form className="text-center" onSubmit={(e) => { e.preventDefault(); props.submit(props.data); }} id="loginForm">
 			<h2 className="text-center mb-2">Connexion</h2>
 			{props.data.failed && <p className="alert alert-danger">{props.data.failed}</p>}
 			{props.data.success && <p className="alert alert-success">OK</p>}
@@ -32,16 +32,16 @@ const LoginForm = ( props ) => {
 					onChange={props.onChangeHandler}
 					className="form-control"/>
 			</div>
-			<div className="form-group">
-				<a className="btn btn-dark bg-light form-control">Se connecter via 42</a>
-			</div>
-			<div className="form-group">
-				<a className="btn btn-danger form-control text-light">Se connecter via Google</a>
-			</div>
-			<Link to="/resetpass" className="btn btn-sm btn-link">J'ai oublié mon mot de passe</Link>
+			<Link to="/resetpass" className="btn btn-sm btn-link">J'ai oublié mon mot de passe</Link><br />
 			<Link to="/signup" className="btn btn-sm btn-link">Je n'ai pas encore de compte</Link>
 			<div className="form-group text-center">
 				<Button loading={props.data.loading} text="Se connecter" />
+			</div>
+			<div className="form-group">
+				<a className="btn btn-dark form-control">Se connecter via 42</a>
+			</div>
+			<div className="form-group">
+				<a className="btn btn-dark form-control">Se connecter via Google</a>
 			</div>
 		</form>
 	)

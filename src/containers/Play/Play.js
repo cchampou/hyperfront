@@ -66,7 +66,7 @@ class Play extends Component {
 			<div className="container">
 				<div className="row my-4">
 					<div className="col">
-						<div className="row">
+						<div className="row py-4 bg-dark">
 							<div className="col-3">
 								<img className="img-fluid" src={this.state.cover} alt={this.state.title} />
 							</div>
@@ -82,12 +82,12 @@ class Play extends Component {
 								</p>
 							</div>
 						</div>
-						<div className="row my-4">
+						<div className="row py-4 my-4 bg-dark">
 							<div className="col">
 								<p className="text-center">Player video</p>
 							</div>
 						</div>
-						<div className="row">
+						<div className="row py-4 bg-dark">
 							<div className="col">
 								<h3>Commentaires</h3>
 								{this.state.comments.map((com, key) => (

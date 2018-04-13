@@ -10,8 +10,12 @@ const AccountForm = (props) => (
 			console.log(props);
 			props.submitAccount(props);
 		}}>
-		<h2 className="text-center">Mon compte</h2>
-		<div className="row">
+		<div className="row bg-dark mb-4 py-2">
+			<div className="col">
+				<h2 className="text-center bg-dark">Mon compte</h2>
+			</div>
+		</div>
+		<div className="row bg-dark py-4">
 			<div className="col-lg-6">
 				<div className="row justify-content-center">
 					<div className="col-lg-6 col-md-4 col-sm-4 col-6 my-4">
@@ -70,14 +74,14 @@ const AccountForm = (props) => (
 						onChange={props.handleChange}
 						value={props.newConfirmation} />
 				</div>
+				{props.fail &&
+					<p className="alert alert-danger">{props.fail}</p>}
+				{props.success &&
+					<p className="alert alert-success">Vos profil a bien été mis à jour</p>}
+				<div className="form-group text-center">
+					<Button text="Enregistrer" loading={props.loading} />
+				</div>
 			</div>
-		</div>
-		{props.fail &&
-		<p className="alert alert-danger">{props.fail}</p>}
-		{props.success &&
-		<p className="alert alert-success">Vos profil a bien été mis à jour</p>}
-		<div className="form-group text-center">
-			<Button text="Enregistrer" loading={props.loading} />
 		</div>
 	</form>
 )

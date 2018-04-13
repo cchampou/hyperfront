@@ -15,7 +15,7 @@ import './App.css';
 
 const App = () => (
 		<BrowserRouter>
-			<div style={{ height: '100%', position: 'relative' }}>
+			<div style={{ minHeight: '100%', position: 'relative', paddingBottom: '60px' }}>
 				<Header />
 				<Switch>
 					<Route path="/" exact component={Search} />

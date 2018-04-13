@@ -12,7 +12,7 @@ export function* processAccountSaga ( action ) {
 		data : action.data
 	});
 	try {
-		yield axios.post(config.api_url+'/user', {
+		yield axios.patch(config.api_url+'/user', {
 			username : action.data.newUsername,
 			email : action.data.newEmail,
 			password : action.data.newPassword
