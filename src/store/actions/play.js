@@ -1,8 +1,9 @@
 import * as actionTypes from './actionTypes'
 
-export const processComment = comment => ({
+export const processComment = (comment, videoId) => ({
 	type : actionTypes.PROCESS_COMMENT,
-	comment : comment
+	comment,
+	videoId
 })
 
 export const resetComment = () => ({

@@ -8,20 +8,22 @@ import createSagaMiddleware from 'redux-saga';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
-import loginReducer from './store/reducers/login';
-import signupReducer from './store/reducers/signup';
-import resetPassReducer from './store/reducers/resetPass';
-import userReducer from './store/reducers/user';
-import playReducer from './store/reducers/play';
+import login from './store/reducers/login';
+import signup from './store/reducers/signup';
+import resetPass from './store/reducers/resetPass';
+import user from './store/reducers/user';
+import play from './store/reducers/play';
+import account from './store/reducers/account';
 
 import { sagaWatcher } from './store/sagas';
 
 const rootReducer = combineReducers({
-	login: loginReducer,
-	signup: signupReducer,
-	resetPass: resetPassReducer,
-	user: userReducer,
-	play: playReducer
+	login,
+	signup,
+	resetPass,
+	user,
+	play,
+	account
 });
 
 const sagaMiddleware = createSagaMiddleware();

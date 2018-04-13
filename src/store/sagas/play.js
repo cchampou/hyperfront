@@ -1,5 +1,4 @@
 import { put } from 'redux-saga/effects'
-import { delay } from 'redux-saga'
 
 import axios from 'axios'
 
@@ -7,14 +6,22 @@ import * as config from '../../config.js';
 
 import * as actionTypes from '../actions/actionTypes'
 
-export function* processCommentSaga(action) {
+export function* processCommentSaga({ comment, videoId }) {
 	yield put({
 		type : actionTypes.POST_COMMENT,
-		comment : action.comment
+		comment
 	});
-	console.log("async request with content", action.comment)
-	yield delay(1000);
-	yield put({
-		type : actionTypes.POST_COMMENT_SUCCESS
-	})
+	try {
+		yield axios.post(config.api_url+'/comment', {
+			comment,
+			videoId
+		});
+		yield put({
+			type : actionTypes.POST_COMMENT_SUCCESS
+		})
+ 	} catch (err) {
+		yield put({
+			type : actionTypes.POST_COMMENT_FAILED
+		})
+	}
 }

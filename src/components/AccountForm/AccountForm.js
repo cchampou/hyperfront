@@ -1,8 +1,15 @@
 import React from 'react';
+
+import Button from '../Utils/Button'
+
 import ProfilePic from '../../assets/img/profile.svg';
 
 const AccountForm = (props) => (
-	<form>
+	<form onSubmit={(e) => {
+			e.preventDefault();
+			console.log(props);
+			props.submitAccount(props);
+		}}>
 		<h2 className="text-center">Mon compte</h2>
 		<div className="row">
 			<div className="col-lg-6">
@@ -19,46 +26,58 @@ const AccountForm = (props) => (
 						id="profilePic"
 						name="profilePic" />
 				</div>
-				<div className="form-group">
-					<label htmlFor="username">Nom d'utilisateur :</label>
-					<input
-						type="text"
-						className="form-control"
-						id="username"
-						name="username"
-						value={props.data.username} />
-				</div>
 			</div>
 			<div className="col-lg-6">
 				<div className="form-group">
-					<label htmlFor="email">Adresse email :</label>
+					<label htmlFor="newUsername">Nom d'utilisateur :</label>
+					<input
+						type="text"
+						className="form-control"
+						id="newUsername"
+						name="newUsername"
+						placeholder={props.data.username}
+						onChange={props.handleChange}
+						value={props.newUsername} />
+				</div>
+				<div className="form-group">
+					<label htmlFor="newEmail">Adresse email :</label>
 					<input
 						type="email"
 						className="form-control"
-						id="email"
-						name="email"
-						value={props.data.email} />
+						id="newEmail"
+						name="newEmail"
+						placeholder={props.data.email}
+						onChange={props.handleChange}
+						value={props.newEmail} />
 				</div>
 				<div className="form-group">
-					<label htmlFor="email">Nouveau mot de passe :</label>
+					<label htmlFor="newPassword">Nouveau mot de passe :</label>
 					<input
 						type="password"
 						className="form-control"
-						id="password"
-						name="password" />
+						id="newPassword"
+						name="newPassword"
+						value={props.newPassword}
+						onChange={props.handleChange} />
 				</div>
 				<div className="form-group">
-					<label htmlFor="email">Confirmation mot de passe :</label>
+					<label htmlFor="newConfirmation">Confirmation mot de passe :</label>
 					<input
 						type="password"
 						className="form-control"
-						id="confirmation"
-						name="confirmation" />
+						id="newConfirmation"
+						name="newConfirmation"
+						onChange={props.handleChange}
+						value={props.newConfirmation} />
 				</div>
 			</div>
 		</div>
-		<div className="form-group text-right">
-			<button className="btn btn-success">Enregistrer</button>
+		{props.fail &&
+		<p className="alert alert-danger">{props.fail}</p>}
+		{props.success &&
+		<p className="alert alert-success">Vos profil a bien été mis à jour</p>}
+		<div className="form-group text-center">
+			<Button text="Enregistrer" loading={props.loading} />
 		</div>
 	</form>
 )

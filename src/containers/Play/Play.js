@@ -104,6 +104,7 @@ class Play extends Component {
 									submitComment={this.props.submitComment}
 									loading={this.props.commentLoading}
 									fail={this.state.fail}
+									videoId={this.props.match.params.id}
 									success={this.state.success} />
 							</div>
 						</div>
@@ -125,7 +126,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
 	return {
-		submitComment: (comment) => dispatch(processComment(comment)),
+		submitComment: (comment, videoId) => dispatch(processComment(comment, videoId)),
 		resetComment: () => dispatch(resetComment())
 	}
 }

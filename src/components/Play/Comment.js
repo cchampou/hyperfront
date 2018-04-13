@@ -2,7 +2,7 @@ import React from 'react'
 import Button from '../Utils/Button'
 
 const Comment = ( props ) => (
-	<form onSubmit={(e) => { e.preventDefault(); props.submitComment(props.comment); } } >
+	<form onSubmit={(e) => { e.preventDefault(); props.submitComment(props.comment, props.videoId); } } >
 		<div className="form-group">
 			<label htmlFor="comment">Mon commentaire :</label>
 			<textarea
