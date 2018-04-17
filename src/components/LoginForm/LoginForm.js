@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Button from '../Utils/Button';
 
+import * as config from '../../config'
+
 import './LoginForm.css';
 
 const LoginForm = ( props ) => {
@@ -38,10 +40,10 @@ const LoginForm = ( props ) => {
 				<Button loading={props.data.loading} text="Se connecter" />
 			</div>
 			<div className="form-group">
-				<a className="btn btn-dark form-control">Se connecter via 42</a>
+				<a className="btn btn-dark form-control" href={config.api_url+'/auth/42'}>Se connecter via 42</a>
 			</div>
 			<div className="form-group">
-				<a className="btn btn-dark form-control">Se connecter via Google</a>
+				<a className="btn btn-dark form-control" href={config.api_url+'/auth/google'}>Se connecter via Google</a>
 			</div>
 		</form>
 	)

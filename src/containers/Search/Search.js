@@ -94,26 +94,39 @@ export default class Search extends Component {
 
 	render () {
 		return (
-			<div className="container">
+			<div className="container-fluid">
 				{(this.state.selection !== false) ? <Redirect to={'/play/'+this.state.selection} push={true} />:null}
-				<div className="col">
-					<div className="form-group my-4">
-						<input
-							type="text"
-							className="form-control"
-							onChange={this.search}
-							value={this.state.search} />
-					</div>
-					<div className="row justify-content-center">
-					{this.state.results.map((elem, key) => (
-						<div onClick={this.select.bind(this, key)} className="card m-2" style={{ width: '10rem', cursor: 'pointer' }} key={key} >
-							<img className="card-img-top" src={elem.cover} alt={elem.title} />
-							<div className="card-body">
-								<h5 className="card-title">{elem.title}</h5>
-								<p className="card-subtitle text-muted">{elem.date} - {elem.note} <span style={{ color : '#FFD600' }}><FontAwesomeIcon size="xs" icon={faStar}/></span></p>
-							</div>
+				<div className="row p-4">
+					<div className="col-2 bg-dark">
+						<div className="form-group my-4">
+							<input
+								type="text"
+								className="form-control"
+								onChange={this.search}
+								value={this.state.search}
+								placeholder="Rechercher..." />
 						</div>
-					))}
+						<h5>Categories</h5>
+						<span>Action</span><br />
+						<span>Comédie</span><br />
+						<span>Thriller</span><br /><br />
+						<h5>Trier par</h5>
+						<span>Année de sortie</span><br />
+						<span>Nom</span><br />
+						<span>Note</span><br />
+					</div>
+					<div className="col-10">
+						<div className="row justify-content-center">
+						{this.state.results.map((elem, key) => (
+							<div onClick={this.select.bind(this, key)} className="card m-2" style={{ width: '10rem', cursor: 'pointer' }} key={key} >
+								<img className="card-img-top" src={elem.cover} alt={elem.title} />
+								<div className="card-body">
+									<h5 className="card-title">{elem.title}</h5>
+									<p className="card-subtitle text-muted">{elem.date} - {elem.note} <span style={{ color : '#FFD600' }}><FontAwesomeIcon size="xs" icon={faStar}/></span></p>
+								</div>
+							</div>
+						))}
+						</div>
 					</div>
 				</div>
 			</div>
