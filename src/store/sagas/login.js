@@ -27,7 +27,7 @@ export function* loginSaga(action) {
 			});
 			yield put({
 				type: actionTypes.LOGIN_LOCAL,
-				token: res.data.token
+				token: res.data.tokens[0].token
 			})
 		} catch (err) {
 			yield put({

@@ -1,8 +1,6 @@
 import { put } from 'redux-saga/effects'
 
-import axios from 'axios';
-
-import * as config from '../../config'
+import * as customRequest from '../../services/network'
 
 import * as actionTypes from '../actions/actionTypes'
 
@@ -12,7 +10,7 @@ export function* processAccountSaga ( action ) {
 		data : action.data
 	});
 	try {
-		yield axios.patch(config.api_url+'/user', {
+		yield customRequest.authRequest.patch('user', {
 			username : action.data.newUsername,
 			email : action.data.newEmail,
 			password : action.data.newPassword
