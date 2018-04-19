@@ -34,7 +34,8 @@ class Reset extends Component {
 						<ResetPassForm
 							data={this.state}
 							onChange={this.onChange}
-							onSubmit={this.props.resetPass} />
+							onSubmit={this.props.resetPass}
+							lang={this.props.lang} />
 					</div>
 				</div>
 			</div>
@@ -44,7 +45,8 @@ class Reset extends Component {
 
 const mapStateToProps = state => {
 	return {
-		data: state.resetPass
+		data: state.resetPass,
+		lang : state.user.lang
 	}
 }
 

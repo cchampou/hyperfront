@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import * as actionTypes from '../../store/actions/actionTypes'
+import * as lang from './Header.lang'
 
 class Header extends Component {
 
@@ -18,19 +19,23 @@ class Header extends Component {
 				</button>
 				<div className="collapse navbar-collapse" id="navbarNav">
 					<ul className="navbar-nav ml-auto">
+
+						<li className="nav-item active">
+							<span className="nav-link" style={{ cursor : 'pointer' }} onClick={this.props.switchLang} >{this.props.lang}</span>
+						</li>
 						{(this.props.isLoggedIn)?
 						<li className="nav-item active">
-							<Link className="nav-link" to="/account">Mon compte</Link>
+							<Link className="nav-link" to="/account">{lang.account(this.props.lang)}</Link>
 						</li>:null}
 
 						{(!this.props.isLoggedIn)?
 						<li className="nav-item active">
-							<Link className="nav-link" to="/login">Se connecter</Link>
+							<Link className="nav-link" to="/login">{lang.connexion(this.props.lang)}</Link>
 						</li>:null}
 
 						{(!this.props.isLoggedIn)?
 						<li className="nav-item active">
-							<Link className="nav-link" to="/signup">S'inscrire</Link>
+							<Link className="nav-link" to="/signup">{lang.signup(this.props.lang)}</Link>
 						</li>:null}
 
 						{(this.props.isLoggedIn)?
@@ -44,17 +49,15 @@ class Header extends Component {
 	}
 }
 
-const mapStateToProps = state => {
-	return {
-		isLoggedIn : state.user.isLoggedIn
-	}
-}
+const mapStateToProps = state => ({
+	isLoggedIn : state.user.isLoggedIn,
+	lang : state.user.lang
+})
 
-const mapDispatchToProps = dispatch => {
-	return {
-		logout: () => dispatch({ type : actionTypes.LOGOUT }),
-		autoLogin : () => dispatch({ type : actionTypes.AUTO_LOGIN })
-	}
-}
+const mapDispatchToProps = dispatch => ({
+	logout: () => dispatch({ type : actionTypes.LOGOUT }),
+	autoLogin : () => dispatch({ type : actionTypes.AUTO_LOGIN }),
+	switchLang : () => dispatch({ type : actionTypes.SWITCH_LANG })
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

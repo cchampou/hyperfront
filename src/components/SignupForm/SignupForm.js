@@ -1,15 +1,16 @@
 import React from 'react'
 import Button from '../Utils/Button';
 import { Link } from 'react-router-dom'
+import * as lang from './SignupForm.lang'
 
 const SignupForm = ( props ) => (
 	<form className="card p-4" onSubmit={(e) => { e.preventDefault(); props.submit(props.data) } } >
-		<h2 className="text-center mb-2">Inscription</h2>
+		<h2 className="text-center mb-2">{lang.title(props.lang)}</h2>
 		{(props.data.error)?<p className="alert alert-danger">{props.data.error}</p>:null}
 		<div className="row">
 			<div className="col-lg-6 col-md-6">
 				<div className="form-group">
-					<label htmlFor="name">Nom :</label>
+					<label htmlFor="name">{lang.name(props.lang)}</label>
 					<input
 						type="text"
 						id="name"
@@ -20,7 +21,7 @@ const SignupForm = ( props ) => (
 						disabled={props.data.loading} />
 				</div>
 				<div className="form-group">
-					<label htmlFor="firstname">Prénom :</label>
+					<label htmlFor="firstname">{lang.firstname(props.lang)}</label>
 					<input
 						type="text"
 						id="firstname"
@@ -31,7 +32,7 @@ const SignupForm = ( props ) => (
 						disabled={props.data.loading} />
 				</div>
 				<div className="form-group">
-					<label htmlFor="email">Adresse email :</label>
+					<label htmlFor="email">{lang.email(props.lang)}</label>
 					<input
 						type="email"
 						id="email"
@@ -42,11 +43,11 @@ const SignupForm = ( props ) => (
 						disabled={props.data.loading} />
 				</div>
 				<div className="form-group">
-					<label htmlFor="profilePic">Photo de profil :</label>
+					<label htmlFor="profilePic">{lang.avatar(props.lang)}</label>
 					<input
 						type="file"
 						className="form-control"
-					id="signupImg"
+						id="signupImg"
 						name="profilePic"
 						onChange={props.onChangeHandler}
 						disabled={props.data.loading}
@@ -55,7 +56,7 @@ const SignupForm = ( props ) => (
 			</div>
 			<div className="col-lg-6 col-md-6">
 				<div className="form-group">
-					<label htmlFor="username">Nom d'utilisateur :</label>
+					<label htmlFor="username">{lang.username(props.lang)}</label>
 					<input
 						type="text"
 						id="username"
@@ -66,7 +67,7 @@ const SignupForm = ( props ) => (
 						disabled={props.data.loading} />
 				</div>
 				<div className="form-group">
-					<label htmlFor="password">Mot de passe :</label>
+					<label htmlFor="password">{lang.password(props.lang)}</label>
 					<input
 						type="password"
 						value={props.data.password}
@@ -77,7 +78,7 @@ const SignupForm = ( props ) => (
 						disabled={props.data.loading} />
 				</div>
 				<div className="form-group">
-					<label htmlFor="confirmation">Confirmation de mot de passe :</label>
+					<label htmlFor="confirmation">{lang.confirmation(props.lang)}</label>
 					<input
 						type="password"
 						value={props.data.confirmation}
@@ -91,8 +92,8 @@ const SignupForm = ( props ) => (
 		</div>
 		<div className="row">
 			<div className="col text-center">
-				<Link to="/login" className="btn btn-sm btn-link">J'ai déjà un compte</Link><br />
-				<Button loading={props.data.loading} text="S'inscrire" />
+				<Link to="/login" className="btn btn-sm btn-link">{lang.already(props.lang)}</Link><br />
+				<Button loading={props.data.loading} text={lang.submit(props.lang)} />
 			</div>
 		</div>
 	</form>

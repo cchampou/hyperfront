@@ -21,7 +21,11 @@ export function* processAccountSaga ( action ) {
 			yield newUser = { ...newUser, username : action.data.newUsername };
 		}
 		if (action.data.newPassword.length > 0) {
-			yield data.append('password', action.data.newPassword);
+			if (action.data.newPassword == action.data.newConfirmation) {
+				yield data.append('password', action.data.newPassword);
+			} else {
+				throw new Error("Le mot de passe et sa confirmation ne correspondent pas");
+			}
 		}
 		if (document.getElementById('accountImg').files[0]) {
 			yield data.append('avatar', document.getElementById('accountImg').files[0]);			
@@ -39,7 +43,7 @@ export function* processAccountSaga ( action ) {
 			data : { ...newUser }
 		})
 	} catch ( err ) {
-		const errMessage = yield (err.response)?err.response.data.toString():"Une erreur est survenue";
+		const errMessage = yield (err.response)?err.response.data.toString():err.toString();
 		yield put ({
 			type : actionTypes.ACCOUNT_FAILED,
 			err : errMessage

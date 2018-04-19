@@ -4,7 +4,8 @@ const initialState = {
 	isLoggedIn : false,
 	username : '',
 	email : '',
-	picture : ''
+	picture : '',
+	lang : 'en'
 }
 
 const reducer = ( state = initialState, action) => {
@@ -29,6 +30,11 @@ const reducer = ( state = initialState, action) => {
 			return {
 				...state,
 				...action.data
+			}
+		case actionTypes.SWITCH_LANG:
+			return {
+				...state,
+				lang : (state.lang == 'fr')?'en':'fr'
 			}
 		default:
 			return state;

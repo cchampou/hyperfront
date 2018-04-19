@@ -42,6 +42,7 @@ class Signup extends Component {
 						<SignupForm
 							data={this.state}
 							submit={this.props.signup}
+							lang={this.props.lang}
 							onChangeHandler={this.onChangeHandler} />
 					</div>
 				</div>
@@ -53,7 +54,8 @@ class Signup extends Component {
 const mapStateToProps = state => {
 	return {
 		data : state.signup,
-		isLoggedIn : state.user.isLoggedIn
+		isLoggedIn : state.user.isLoggedIn,
+		lang : state.user.lang
 	}
 }
 

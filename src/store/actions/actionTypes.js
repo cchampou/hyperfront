@@ -25,6 +25,7 @@ export const SIGNUP_RESET = 'SIGNUP_RESET';
 export const LOG_USER_IN = 'LOG_USER_IN';
 export const LOG_USER_OUT = 'LOG_USER_OUT';
 export const UPDATE_USER = 'UPDATE_USER';
+export const SWITCH_LANG = 'SWITCH_LANG';
 
 // Play
 
