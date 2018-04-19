@@ -8,6 +8,7 @@ export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILED = 'LOGIN_FAILED';
 export const LOGIN_RESET = 'LOGIN_RESET';
 export const LOGOUT = 'LOGOUT';
+export const AUTO_LOGIN = 'AUTO_LOGIN';
 
 // Signup
 
@@ -21,6 +22,7 @@ export const SIGNUP_RESET = 'SIGNUP_RESET';
 
 export const LOG_USER_IN = 'LOG_USER_IN';
 export const LOG_USER_OUT = 'LOG_USER_OUT';
+export const UPDATE_USER = 'UPDATE_USER';
 
 // Play
 

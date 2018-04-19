@@ -3,7 +3,8 @@ import * as actionTypes from '../actions/actionTypes';
 const initialState = {
 	isLoggedIn : false,
 	username : '',
-	email : ''
+	email : '',
+	picture : ''
 }
 
 const reducer = ( state = initialState, action) => {
@@ -13,14 +14,21 @@ const reducer = ( state = initialState, action) => {
 				...state,
 				isLoggedIn : true,
 				username : action.user.username,
-				email : action.user.email
+				email : action.user.email,
+				avatar : action.user.avatar
 			}
 		case actionTypes.LOG_USER_OUT:
 			return {
 				...state,
 				isLoggedIn : false,
 				username : '',
-				email : ''
+				email : '',
+				avatar : ''
+			}
+		case actionTypes.UPDATE_USER:
+			return {
+				...state,
+				...action.data
 			}
 		default:
 			return state;

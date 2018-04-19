@@ -5,9 +5,22 @@ export const publicRequest = axios.create({
 	baseURL: config.api_url
 });
 
-export const authRequest = axios.create({
-	baseURL: config.api_url,
-	headers: {
-		'x-auth' : localStorage.getItem('token')
-	}
-});
+export const authRequest = (endpoint, method, data) => {
+	return new Promise(async (resolve, reject) => {
+		try {
+			const token = await localStorage.getItem('token');
+			const res = await axios({
+				url : config.api_url+endpoint,
+				method : method,
+				data,
+				headers : {
+					'x-auth' : token
+				}
+			});
+			resolve(res);
+		} catch (e) {
+			reject(e);
+		}
+
+	});
+}

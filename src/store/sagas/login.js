@@ -3,6 +3,8 @@ import axios from 'axios';
 
 import * as config from '../../config.js';
 
+import { authRequest } from '../../services/network';
+
 import * as actionTypes from '../actions/actionTypes'
 
 export function* loginSaga(action) {
@@ -21,18 +23,19 @@ export function* loginSaga(action) {
 				username : action.data.username,
 				password : action.data.password
 			});
+			const tokenList = yield res.data.tokens.reverse();
 			yield put({
 				type : actionTypes.LOG_USER_IN,
 				user : res.data
 			});
 			yield put({
 				type: actionTypes.LOGIN_LOCAL,
-				token: res.data.tokens[0].token
+				token: tokenList[0].token
 			})
 		} catch (err) {
 			yield put({
 				type : actionTypes.LOGIN_FAILED,
-				err: err.toString()
+				err: 'Le nom d\'utilisateur ou le mot de passe est incorrect'
 			});
 		}
 	}
@@ -50,4 +53,20 @@ export function* logout(action) {
 	yield put({
 		type : actionTypes.LOG_USER_OUT
 	});
+}
+
+export function* autoLoginSaga(action) {
+	const token = localStorage.getItem('token');
+	
+	if (token) {
+		try {
+			const res = yield authRequest('/user/select', 'get');
+			yield put({
+				type : actionTypes.LOG_USER_IN,
+				user : res.data
+			});
+		} catch (err) {
+			console.log(err);
+		}
+	}
 }

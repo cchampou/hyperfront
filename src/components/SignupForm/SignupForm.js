@@ -46,7 +46,7 @@ const SignupForm = ( props ) => (
 					<input
 						type="file"
 						className="form-control"
-						id="profilePic"
+					id="signupImg"
 						name="profilePic"
 						onChange={props.onChangeHandler}
 						disabled={props.data.loading}

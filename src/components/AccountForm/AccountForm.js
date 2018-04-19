@@ -2,12 +2,13 @@ import React from 'react';
 
 import Button from '../Utils/Button'
 
+import * as config from '../../config'
+
 import ProfilePic from '../../assets/img/profile.svg';
 
 const AccountForm = (props) => (
 	<form onSubmit={(e) => {
 			e.preventDefault();
-			console.log(props);
 			props.submitAccount(props);
 		}}>
 		<div className="row bg-dark mb-4 py-2">
@@ -19,7 +20,7 @@ const AccountForm = (props) => (
 			<div className="col-lg-6">
 				<div className="row justify-content-center">
 					<div className="col-lg-6 col-md-4 col-sm-4 col-6 my-4">
-						<img className="mx-auto img-thumbnail" src={ProfilePic} alt="Default profile" />
+						<img className="mx-auto img-thumbnail" src={(props.data.avatar)?config.api_url+'/'+props.data.avatar:ProfilePic} alt="Default profile" />
 					</div>
 				</div>
 				<div className="form-group">
@@ -27,7 +28,7 @@ const AccountForm = (props) => (
 					<input
 						type="file"
 						className="form-control"
-						id="profilePic"
+						id="accountImg"
 						name="profilePic" />
 				</div>
 			</div>
@@ -77,7 +78,7 @@ const AccountForm = (props) => (
 				{props.fail &&
 					<p className="alert alert-danger">{props.fail}</p>}
 				{props.success &&
-					<p className="alert alert-success">Vos profil a bien été mis à jour</p>}
+					<p className="alert alert-success">Votre profil a bien été mis à jour</p>}
 				<div className="form-group text-center">
 					<Button text="Enregistrer" loading={props.loading} />
 				</div>
