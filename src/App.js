@@ -10,6 +10,7 @@ import Login from './containers/Login/Login';
 import Signup from './containers/Signup/Signup';
 import Account from './containers/Account/Account';
 import ResetPass from './containers/ResetPass/ResetPass';
+import Auth from './containers/Auth/Auth';
 
 import './App.css';
 
@@ -20,6 +21,7 @@ const App = () => (
 				<Switch>
 					<Route path="/" exact component={Search} />
 					<Route path="/play/:id" exact component={Play} />
+					<Route path="/authenticate/:token" exact component={Auth} />
 					<Route path="/login" exact component={Login} />
 					<Route path="/account" exact component={Account} />
 					<Route path="/signup" exact component={Signup} />

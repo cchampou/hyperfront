@@ -9,6 +9,8 @@ export const LOGIN_FAILED = 'LOGIN_FAILED';
 export const LOGIN_RESET = 'LOGIN_RESET';
 export const LOGOUT = 'LOGOUT';
 export const AUTO_LOGIN = 'AUTO_LOGIN';
+export const EXTERNAL_LOGIN = 'EXTERNAL_LOGIN';
+export const EXTERNAL_SUCCESS = 'EXTERNAL_SUCCESS';
 
 // Signup
 

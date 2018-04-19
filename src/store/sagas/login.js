@@ -55,6 +55,29 @@ export function* logout(action) {
 	});
 }
 
+export function* externalLoginSaga(action) {
+	try {
+		yield put({
+			type: actionTypes.LOGIN_LOCAL,
+			token: action.token
+		})
+		const res = yield authRequest('/user/select', 'get');
+		yield put({
+			type : actionTypes.LOG_USER_IN,
+			user : res.data
+		});
+		yield put({
+			type: actionTypes.EXTERNAL_SUCCESS
+		});
+	} catch (err) {
+		console.log(err);
+		yield put({
+			type : actionTypes.LOGIN_FAILED,
+			err: 'Echec de l\'authentification'
+		});
+	}
+}
+
 export function* autoLoginSaga(action) {
 	const token = localStorage.getItem('token');
 	

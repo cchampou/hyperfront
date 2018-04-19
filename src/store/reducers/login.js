@@ -5,7 +5,8 @@ const initialState = {
 	password : '',
 	loading: false,
 	failed : false,
-	success : false
+	success : false,
+	externalRedirect : false
 }
 
 const reducer = (state = initialState, action) => {
@@ -42,7 +43,13 @@ const reducer = (state = initialState, action) => {
 				password: '',
 				loading: false,
 				failed: false,
-				success: false
+				success: false,
+				externalRedirect: false
+			}
+		case actionTypes.EXTERNAL_SUCCESS:
+			return {
+				...state,
+				externalRedirect: true
 			}
 		default:
 			return state;
