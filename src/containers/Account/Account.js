@@ -55,7 +55,8 @@ class Account extends Component {
 							newUsername={this.state.newUsername}
 							newEmail={this.state.newEmail}
 							newPassword={this.state.newPassword}
-							newConfirmation={this.state.newConfirmation} />
+							newConfirmation={this.state.newConfirmation}
+							lang={this.props.lang} />
 					</div>
 				</div>
 			</div>
@@ -72,7 +73,8 @@ const mapStateToProps = state => {
 		newUsername : state.account.newUsername,
 		newEmail : state.account.newEmail,
 		newPassword : state.account.newPassword,
-		newConfirmation : state.account.newConfirmation
+		newConfirmation : state.account.newConfirmation,
+		lang : state.user.lang
 	}
 }
 

@@ -2,6 +2,8 @@ import React from 'react';
 
 import Button from '../Utils/Button'
 
+import * as lang from './AccountForm.lang'
+
 import * as config from '../../config'
 
 import ProfilePic from '../../assets/img/profile.svg';
@@ -13,7 +15,7 @@ const AccountForm = (props) => (
 		}}>
 		<div className="row bg-dark mb-4 py-2">
 			<div className="col">
-				<h2 className="text-center bg-dark">Mon compte</h2>
+				<h2 className="text-center bg-dark">{lang.account(props.lang)}</h2>
 			</div>
 		</div>
 		<div className="row bg-dark py-4">
@@ -24,7 +26,7 @@ const AccountForm = (props) => (
 					</div>
 				</div>
 				<div className="form-group">
-					<label htmlFor="profilePic">Nouvelle photo de profil :</label>
+					<label htmlFor="profilePic">{lang.avatar(props.lang)}</label>
 					<input
 						type="file"
 						className="form-control"
@@ -34,7 +36,7 @@ const AccountForm = (props) => (
 			</div>
 			<div className="col-lg-6">
 				<div className="form-group">
-					<label htmlFor="newUsername">Nom d'utilisateur :</label>
+					<label htmlFor="newUsername">{lang.username(props.lang)}</label>
 					<input
 						type="text"
 						className="form-control"
@@ -45,7 +47,7 @@ const AccountForm = (props) => (
 						value={props.newUsername} />
 				</div>
 				<div className="form-group">
-					<label htmlFor="newEmail">Adresse email :</label>
+					<label htmlFor="newEmail">{lang.email(props.lang)}</label>
 					<input
 						type="email"
 						className="form-control"
@@ -56,7 +58,7 @@ const AccountForm = (props) => (
 						value={props.newEmail} />
 				</div>
 				<div className="form-group">
-					<label htmlFor="newPassword">Nouveau mot de passe :</label>
+					<label htmlFor="newPassword">{lang.password(props.lang)}</label>
 					<input
 						type="password"
 						className="form-control"
@@ -66,7 +68,7 @@ const AccountForm = (props) => (
 						onChange={props.handleChange} />
 				</div>
 				<div className="form-group">
-					<label htmlFor="newConfirmation">Confirmation mot de passe :</label>
+					<label htmlFor="newConfirmation">{lang.confirmation(props.lang)}</label>
 					<input
 						type="password"
 						className="form-control"
@@ -78,9 +80,9 @@ const AccountForm = (props) => (
 				{props.fail &&
 					<p className="alert alert-danger">{props.fail}</p>}
 				{props.success &&
-					<p className="alert alert-success">Votre profil a bien été mis à jour</p>}
+					<p className="alert alert-success">{lang.success(props.lang)}</p>}
 				<div className="form-group text-center">
-					<Button text="Enregistrer" loading={props.loading} />
+					<Button text={lang.submit(props.lang)} loading={props.loading} />
 				</div>
 			</div>
 		</div>
