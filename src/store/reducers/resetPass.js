@@ -1,36 +1,36 @@
 
-import * as actions from '../actions/resetPass'
+import * as actionTypes from '../actions/actionTypes'
 
 const initialState = {
-	email: '',
 	loading: false,
-	error: ''
+	error: '',
+	ok : false
 }
 
 export const reducer = (state = initialState, action) => {
 
 	switch (action.type) {
-		case actions.RESET_PASS:
+		case actionTypes.RESET_PASS:
 			return {
 				...state,
-				email: action.data.email,
 				error: '',
+				ok : false,
 				loading: true
 			}
-		case actions.RESET_PASS_FAILED:
+		case actionTypes.RESET_PASS_FAILED:
 			return {
 				...state,
 				loading: false,
 				error: action.error
 			}
-		case actions.RESET_PASS_SUCCESS:
+		case actionTypes.RESET_PASS_SUCCESS:
 			return {
 				...state,
-				laoding: false,
+				loading: false,
 				error: '',
-				email: ''
+				ok : true
 			}
-		case actions.RESET_PASS_RESET:
+		case actionTypes.RESET_PASS_RESET:
 			return initialState
 		default:
 			return state

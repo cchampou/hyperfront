@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import * as actions from '../../store/actions/resetPass'
+import * as actionTypes from '../../store/actions/actionTypes'
 
 import ResetPassForm from '../../components/ResetPassForm/ResetPassForm';
 
@@ -11,7 +11,8 @@ class Reset extends Component {
 		super (props);
 		this.state = {
 			email: '',
-			loading: false
+			loading: false,
+			ok : false
 		}
 	}
 
@@ -49,7 +50,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
 	return {
-		resetPass: (data) => dispatch(actions.resetPass(data))
+		resetPass: (data) => dispatch({ type : actionTypes.RESET_PASS_PROCESS, email : data.email })
 	}
 }
 

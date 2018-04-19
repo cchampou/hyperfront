@@ -6,8 +6,9 @@ const SignupForm = ( props ) => (
 	<form className="card p-4" onSubmit={(e) => { e.preventDefault(); props.onSubmit(props.data); } } >
 		<h2 className="text-center mb-2">Mot de passe oublié</h2>
 		{props.data.error && <p className="alert alert-danger">{props.data.error}</p>}
+		{props.data.ok && <p className="alert alert-success">Un email vient de vous être envoyé pour modifier votre mot de passe</p>}
 		<div className="form-group">
-			<label htmlFor="email">Adresse email :</label>
+			<label htmlFor="email">Adresse email : {props.data.loading && 'charge'}</label>
 			<input
 				type="email"
 				id="email"

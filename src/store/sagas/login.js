@@ -7,6 +7,24 @@ import { authRequest } from '../../services/network';
 
 import * as actionTypes from '../actions/actionTypes'
 
+export function* resetPassSaga(action) {
+	yield put({
+		type : actionTypes.RESET_PASS
+	})
+	try {
+		const res = yield axios.post(config.api_url+'/user/forget', { email : action.email });
+		yield put({
+			type : actionTypes.RESET_PASS_SUCCESS
+		})
+	} catch (err) {
+		yield put({
+			type : actionTypes.RESET_PASS_FAILED,
+			error : 'Cet utilisateur n\'existe pas'
+		})
+	}
+}
+
+
 export function* loginSaga(action) {
 	yield put({
 		type : actionTypes.LOGIN,

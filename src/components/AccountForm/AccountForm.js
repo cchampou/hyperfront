@@ -20,7 +20,7 @@ const AccountForm = (props) => (
 			<div className="col-lg-6">
 				<div className="row justify-content-center">
 					<div className="col-lg-6 col-md-4 col-sm-4 col-6 my-4">
-						<img className="mx-auto img-thumbnail" src={(props.data.avatar)?config.api_url+'/'+props.data.avatar:ProfilePic} alt="Default profile" />
+						<img className="mx-auto img-thumbnail" style={{ width : '100%' }} src={(props.data.avatar)?props.data.avatar:ProfilePic} alt="Default profile" />
 					</div>
 				</div>
 				<div className="form-group">
