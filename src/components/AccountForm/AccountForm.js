@@ -4,8 +4,6 @@ import Button from '../Utils/Button'
 
 import * as lang from './AccountForm.lang'
 
-import * as config from '../../config'
-
 import ProfilePic from '../../assets/img/profile.svg';
 
 const AccountForm = (props) => (

@@ -12,7 +12,7 @@ export function* resetPassSaga(action) {
 		type : actionTypes.RESET_PASS
 	})
 	try {
-		const res = yield axios.post(config.api_url+'/user/forget', { email : action.email });
+		yield axios.post(config.api_url+'/user/forget', { email : action.email });
 		yield put({
 			type : actionTypes.RESET_PASS_SUCCESS
 		})

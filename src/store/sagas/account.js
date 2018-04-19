@@ -21,7 +21,7 @@ export function* processAccountSaga ( action ) {
 			yield newUser = { ...newUser, username : action.data.newUsername };
 		}
 		if (action.data.newPassword.length > 0) {
-			if (action.data.newPassword == action.data.newConfirmation) {
+			if (action.data.newPassword === action.data.newConfirmation) {
 				yield data.append('password', action.data.newPassword);
 			} else {
 				throw new Error("Le mot de passe et sa confirmation ne correspondent pas");

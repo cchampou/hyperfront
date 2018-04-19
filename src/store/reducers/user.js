@@ -34,7 +34,7 @@ const reducer = ( state = initialState, action) => {
 		case actionTypes.SWITCH_LANG:
 			return {
 				...state,
-				lang : (state.lang == 'fr')?'en':'fr'
+				lang : (state.lang === 'fr')?'en':'fr'
 			}
 		default:
 			return state;
