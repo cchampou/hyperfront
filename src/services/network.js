@@ -5,7 +5,7 @@ export const publicRequest = axios.create({
 	baseURL: config.api_url
 });
 
-export const authRequest = (endpoint, method, data) => {
+export const authRequest = (endpoint, method, data = {}) => {
 	return new Promise(async (resolve, reject) => {
 		try {
 			const token = await localStorage.getItem('token');

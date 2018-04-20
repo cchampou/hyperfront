@@ -50,3 +50,18 @@ export const RESET_PASS_SUCCESS = 'RESET_PASS_SUCCESS';
 export const RESET_PASS_FAILED = 'RESET_PASS_FAILED';
 export const RESET_PASS_RESET = 'RESET_PASS_RESET';
 export const RESET_PASS_PROCESS = 'RESET_PASS_PROCESS';
+
+// genre
+
+export const GET_GENRES = 'GET_GENRES'; 
+export const GET_GENRES_SAGA = 'GET_GENRES_SAGA';
+
+// Movies
+
+export const GET_MOVIES = 'GET_MOVIES';
+export const GET_MOVIES_SAGA = 'GET_MOVIES_SAGA';
+export const GET_MOVIE_SAGA = 'GET_MOVIE_SAGA';
+export const GET_MOVIE = 'GET_MOVIE';
+export const GET_CASTING = 'GET_CASTING';
+export const GET_CASTING_SAGA = 'GET_CASTING_SAGA';
+export const LOADING_MOVIES = 'LOADING_MOVIES';

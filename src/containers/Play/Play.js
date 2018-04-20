@@ -5,7 +5,13 @@ import { Link } from 'react-router-dom'
 import FontAwesomeIcon from '@fortawesome/react-fontawesome'
 import faStar from '@fortawesome/fontawesome-free-solid/faStar'
 
+import poster from '../../assets/img/poster.png';
+
 import { processComment, resetComment } from '../../store/actions/play'
+
+import * as lang from './Play.lang'
+
+import * as actionTypes from '../../store/actions/actionTypes';
 
 import Comment from '../../components/Play/Comment'
 
@@ -17,40 +23,32 @@ class Play extends Component {
 			comment : props.comment,
 			fail: props.fail,
 			success: props.success,
-			title : 'Taxi 5',
-			cover : 'http://t0.gstatic.com/images?q=tbn:ANd9GcTVwSyjEPLjLlwy7F5f9oSkZ5Z6wG1nI2pGagtDF0MGAdeWqnzf',
-			date : '2018',
-			duree :' 1h 42min',
-			note : 4.5,
-			resume : 'Sylvain Marot, super flic parisien et pilote d’exception, est muté contre son gré à la Police Municipale de Marseille. L’ex-commissaire Gibert, devenu Maire de la ville et au plus bas dans les sondages, va alors lui confier la mission de stopper le redoutable « Gang des Italiens », qui écume des bijouteries à l’aide de puissantes Ferrari. Mais pour y parvenir, Marot n’aura pas d’autre choix que de collaborer avec le petit-neveu du célèbre Daniel, Eddy Maklouf, le pire chauffeur VTC de Marseille, mais le seul à pouvoir récupérer le légendaire TAXI blanc.',
-			realisateur : 'Franck Gastambide',
 			casting : 'Franck Gastambide, Malik Bentalha, Bernard Farcy',
-			comments : [
-				{
-					content : "Bof bof, jpreferais les precedents",
-					author : 'Clement',
-					authorId : '123456',
-					date : new Date()
-				},
-				{
-					content : "C'est un bon gros film de merde encore",
-					author : 'Mathieu',
-					authorId : '123456',
-					date : new Date()
-				}
-			]
+			comments : [],
+			details : {
+				poster_path : '',
+				release_date : '2018'
+			},
+			cast : {
+				crew : [],
+				cast : []
+			}
 		}
 	}
 
 	componentDidMount () {
 		this.props.resetComment();
+		this.props.getMovie(this.props.match.params.id);
+		this.props.getCasting(this.props.match.params.id);
 	}
 
-	componentWillReceiveProps ( { comment, fail, success } ) {
+	componentWillReceiveProps ( { comment, fail, success, fr, en, lang, cast_en, cast_fr } ) {
 		this.setState({
 			comment,
 			fail,
-			success
+			success,
+			details : (lang === 'en')?en:fr,
+			cast : (lang === 'en')?cast_en:cast_fr
 		})
 	}
 
@@ -68,17 +66,17 @@ class Play extends Component {
 					<div className="col">
 						<div className="row py-4 bg-dark">
 							<div className="col-3">
-								<img className="img-fluid" src={this.state.cover} alt={this.state.title} />
+								<img className="img-fluid" src={(this.state.details.poster_path)?'https://image.tmdb.org/t/p/w200'+this.state.details.poster_path:poster} alt={this.state.details.title} />
 							</div>
 							<div className="col">
-								<h1 className="mt-4">{this.state.title}</h1>
-								<p className="card-subtitle text-muted">{this.state.date} - {this.state.note} <span style={{ color : '#FFD600' }}><FontAwesomeIcon size="xs" icon={faStar}/></span> - {this.state.duree}</p>
+								<h1 className="mt-4">{this.state.details.title}</h1>
+								<p className="card-subtitle text-muted">{this.state.details.release_date && this.state.details.release_date.substr(0,4)} - {this.state.details.vote_average} <span style={{ color : '#FFD600' }}><FontAwesomeIcon size="xs" icon={faStar}/></span> - {this.state.details.runtime} minutes</p>
 								<p>
-									<strong>Réalisateur : </strong>{this.state.realisateur}<br />
-									<strong>Casting : </strong>{this.state.casting}
+									<strong>{lang.by(this.props.lang)} : </strong>{this.state.cast.crew[0] && this.state.cast.crew[0].name}<br />
+									<strong>{lang.and(this.props.lang)} : </strong>{this.state.cast.cast[0] && this.state.cast.cast[0].name}, {this.state.cast.cast[1] && this.state.cast.cast[1].name}, {this.state.cast.cast[2] && this.state.cast.cast[2].name} ...<br />
 								</p>
 								<p>
-									{this.state.resume}
+									{this.state.details.overview}
 								</p>
 							</div>
 						</div>
@@ -89,7 +87,8 @@ class Play extends Component {
 						</div>
 						<div className="row py-4 bg-dark">
 							<div className="col">
-								<h3>Commentaires</h3>
+								<h3>{lang.comments(this.props.lang)}</h3>
+								{(!this.state.comments.length)?<p>{lang.nocom(this.props.lang)}</p>:null}
 								{this.state.comments.map((com, key) => (
 									<p key={key}>
 										<span className="text-muted"><Link to={'/user/'+com.authorId} >{com.author}</Link> - {com.date.toString()}</span><br />
@@ -105,7 +104,8 @@ class Play extends Component {
 									loading={this.props.commentLoading}
 									fail={this.state.fail}
 									videoId={this.props.match.params.id}
-									success={this.state.success} />
+									success={this.state.success}
+									lang={this.props.lang} />
 							</div>
 						</div>
 					</div>
@@ -117,6 +117,11 @@ class Play extends Component {
 
 const mapStateToProps = state => {
 	return {
+		fr : state.movie.movie_fr,
+		en : state.movie.movie_en,
+		cast_fr : state.movie.cast_fr,
+		cast_en : state.movie.cast_en,
+		lang : state.user.lang,
 		commentLoading : state.play.commentLoading,
 		comment : state.play.comment,
 		success : state.play.success,
@@ -126,6 +131,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
 	return {
+		getMovie : id => dispatch({ type : actionTypes.GET_MOVIE_SAGA, id : id }),
+		getCasting : id => dispatch({ type : actionTypes.GET_CASTING_SAGA, id : id }),
 		submitComment: (comment, videoId) => dispatch(processComment(comment, videoId)),
 		resetComment: () => dispatch(resetComment())
 	}
