@@ -15,6 +15,8 @@ import * as actionTypes from '../../store/actions/actionTypes';
 
 import Comment from '../../components/Play/Comment'
 
+import Hls from 'hls.js';
+
 class Play extends Component {
 
 	constructor (props) {
@@ -24,6 +26,7 @@ class Play extends Component {
 			fail: props.fail,
 			success: props.success,
 			casting : 'Franck Gastambide, Malik Bentalha, Bernard Farcy',
+			received: false,
 			comments : [],
 			details : {
 				poster_path : '',
@@ -42,14 +45,44 @@ class Play extends Component {
 		this.props.getCasting(this.props.match.params.id);
 	}
 
-	componentWillReceiveProps ( { comment, fail, success, fr, en, lang, cast_en, cast_fr, comments } ) {
-		this.setState({
+	componentWillReceiveProps ( { comment, fail, success, fr, en, lang, cast_en, cast_fr, comments, username } ) {
+		let received = false;
+
+		if (this.props.username && this.props.fr.title && this.props.en.title && this.props.lang && !this.state.received){
+            let video = document.getElementById('example-video');
+
+            if(Hls.isSupported()) {
+                let hls = new Hls({
+                    manifestLoadingTimeOut: 240000,
+                    manifestLoadingMaxRetry: 2,
+                    autoStartLoad: false
+                });
+
+                console.log(this.props[this.props.lang]);
+                hls.loadSource(`http://localhost:3000/video/m3u?id=${username}&name=${this.props[this.props.lang].title}`);
+                hls.attachMedia(video);
+                hls.on(Hls.Events.MANIFEST_PARSED,function() {
+                    hls.startLoad(0);
+                });
+            }
+            else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+                video.src = `http://localhost:3000/video/m3u?id=${this.props.username}&name=${this.props[this.props.lang].title}`;
+                video.addEventListener('canplay', function () {
+                });
+            }
+            received = true;
+        }
+        console.log("RECEIVED");
+        console.log(this.props[this.props.lang]);
+
+        this.setState({
 			comment,
 			fail,
 			success,
 			details : (lang === 'en')?en:fr,
 			cast : (lang === 'en')?cast_en:cast_fr,
-			comments
+			comments,
+			received: received
 		})
 	}
 
@@ -83,15 +116,8 @@ class Play extends Component {
 						</div>
 						<div className="row py-4 my-4 bg-dark">
 							<div className="col">
-							<video id='example-video' className="video-js vjs-default-skin mx-auto" controls>
-								<source
-										src="http://localhost:3000/video?name=inception"
-										type="application/x-mpegURL"></source>
+							<video controls>
 							</video>
-							<script>
-								var player = videojs('example-video');
-								player.play();
-							</script>
 							</div>
 						</div>
 						<div className="row py-4 bg-dark">
@@ -135,7 +161,8 @@ const mapStateToProps = state => {
 		commentLoading : state.play.commentLoading,
 		comment : state.play.comment,
 		success : state.play.success,
-		fail : state.play.fail
+		fail : state.play.fail,
+		username : state.user.username
 	}
 }
 
