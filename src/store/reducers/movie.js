@@ -6,6 +6,7 @@ const initialState = {
     loadingList : false,
     movie_fr : {},
     movie_en : {},
+    comments : [],
     cast_fr : {
         crew : [],
         cast : []
@@ -34,6 +35,11 @@ const reducer = ( state = initialState, action) => {
                 ...state,
                 movie_fr : action.fr,
                 movie_en : action.en
+            }
+        case actionTypes.GET_COMMENTS:
+            return {
+                ...state,
+                comments : action.comments.reverse()
             }
         case actionTypes.GET_CASTING:
             return {

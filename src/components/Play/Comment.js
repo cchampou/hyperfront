@@ -5,7 +5,8 @@ const Comment = ( props ) => (
 	<form onSubmit={(e) => { e.preventDefault(); props.submitComment(props.comment, props.videoId); } } >
 		<div className="form-group">
 			<label htmlFor="comment">Mon commentaire :</label>
-			<textarea
+			<input
+				type="text"
 				name="comment"
 				id="comment"
 				value={props.comment}

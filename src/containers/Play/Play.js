@@ -42,13 +42,14 @@ class Play extends Component {
 		this.props.getCasting(this.props.match.params.id);
 	}
 
-	componentWillReceiveProps ( { comment, fail, success, fr, en, lang, cast_en, cast_fr } ) {
+	componentWillReceiveProps ( { comment, fail, success, fr, en, lang, cast_en, cast_fr, comments } ) {
 		this.setState({
 			comment,
 			fail,
 			success,
 			details : (lang === 'en')?en:fr,
-			cast : (lang === 'en')?cast_en:cast_fr
+			cast : (lang === 'en')?cast_en:cast_fr,
+			comments
 		})
 	}
 
@@ -82,21 +83,29 @@ class Play extends Component {
 						</div>
 						<div className="row py-4 my-4 bg-dark">
 							<div className="col">
-								<p className="text-center">Player video</p>
+							<video id='example-video' className="video-js vjs-default-skin mx-auto" controls>
+								<source
+										src="http://localhost:3000/video?name=inception"
+										type="application/x-mpegURL"></source>
+							</video>
+							<script>
+								var player = videojs('example-video');
+								player.play();
+							</script>
 							</div>
 						</div>
 						<div className="row py-4 bg-dark">
-							<div className="col">
+							<div className="col-lg-6 col-md-6 col-sm-12">
 								<h3>{lang.comments(this.props.lang)}</h3>
 								{(!this.state.comments.length)?<p>{lang.nocom(this.props.lang)}</p>:null}
 								{this.state.comments.map((com, key) => (
 									<p key={key}>
-										<span className="text-muted"><Link to={'/user/'+com.authorId} >{com.author}</Link> - {com.date.toString()}</span><br />
-										{com.content}
+										<span className="text-muted"><Link to={'/user/'+com.author} >{com.name}</Link> - {com.date.toString()}</span><br />
+										{com.text}
 									</p>
 								))}
 							</div>
-							<div className="col">
+							<div className="col-lg-6 col-md-6 col-sm-12">
 								<Comment
 									comment={this.state.comment}
 									onChange={this.handleComment}
@@ -121,6 +130,7 @@ const mapStateToProps = state => {
 		en : state.movie.movie_en,
 		cast_fr : state.movie.cast_fr,
 		cast_en : state.movie.cast_en,
+		comments : state.movie.comments,
 		lang : state.user.lang,
 		commentLoading : state.play.commentLoading,
 		comment : state.play.comment,

@@ -9,15 +9,18 @@ export const authRequest = (endpoint, method, data = {}) => {
 	return new Promise(async (resolve, reject) => {
 		try {
 			const token = await localStorage.getItem('token');
-			const res = await axios({
-				url : config.api_url+endpoint,
-				method : method,
-				data,
-				headers : {
-					'x-auth' : token
-				}
-			});
-			resolve(res);
+			if (token) {
+				const res = await axios({
+					url : config.api_url+endpoint,
+					method : method,
+					data,
+					headers : {
+						'x-auth' : token
+					}
+				});
+				resolve(res);
+			}
+			resolve();
 		} catch (e) {
 			reject(e);
 		}

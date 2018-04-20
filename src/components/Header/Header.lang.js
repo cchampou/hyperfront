@@ -10,3 +10,7 @@ export const connexion = lang => (
 export const signup = lang => (
     (lang ===  'fr')?"Inscription":"Sign up"
 )
+
+export const logout = lang => (
+    (lang === 'fr')?"Se déconnecter":"Log out"
+)

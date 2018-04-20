@@ -6,9 +6,9 @@ import * as actionTypes from '../actions/actionTypes'
 import { loginSaga, loginLocal, logout, autoLoginSaga, externalLoginSaga, resetPassSaga } from './login'
 import { signUpSaga } from './signup'
 import { processCommentSaga } from './play'
-import { processAccountSaga } from './account'
+import { processAccountSaga, switchLangSaga } from './account'
 import { getGenresSaga } from './genre'
-import { getMoviesSaga, getMovieSaga, getCastingSaga } from './movie';
+import { getMoviesSaga, getMovieSaga, getCastingSaga, getCommentsSaga } from './movie';
 
 export function* sagaWatcher() {
 	yield takeLatest(actionTypes.LOGIN_PROCESS, loginSaga);
@@ -24,4 +24,6 @@ export function* sagaWatcher() {
 	yield takeLatest(actionTypes.GET_MOVIES_SAGA, getMoviesSaga);
 	yield takeLatest(actionTypes.GET_MOVIE_SAGA, getMovieSaga);
 	yield takeLatest(actionTypes.GET_CASTING_SAGA, getCastingSaga);
+	yield takeLatest(actionTypes.SWITCH_LANG_SAGA, switchLangSaga);
+	yield takeLatest(actionTypes.GET_COMMENTS_SAGA, getCommentsSaga);
 }

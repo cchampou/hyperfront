@@ -16,7 +16,8 @@ const reducer = ( state = initialState, action) => {
 				isLoggedIn : true,
 				username : action.user.username,
 				email : action.user.email,
-				avatar : action.user.avatar
+				avatar : action.user.avatar,
+				lang : (action.user.language === 'french')?'fr':'en'
 			}
 		case actionTypes.LOG_USER_OUT:
 			return {

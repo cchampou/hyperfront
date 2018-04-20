@@ -21,7 +21,7 @@ class Header extends Component {
 					<ul className="navbar-nav ml-auto">
 
 						<li className="nav-item active">
-							<span className="nav-link" style={{ cursor : 'pointer' }} onClick={this.props.switchLang} >{this.props.lang}</span>
+							<span className="nav-link" style={{ cursor : 'pointer' }} onClick={this.props.switchLang.bind(this, this.props.lang)} >{(this.props.lang === 'fr')?'EN':'FR'}</span>
 						</li>
 						{(this.props.isLoggedIn)?
 						<li className="nav-item active">
@@ -40,7 +40,7 @@ class Header extends Component {
 
 						{(this.props.isLoggedIn)?
 						<li className="nav-item active">
-							<Link to="/" className="nav-link" onClick={this.props.logout} >Se deconnecter</Link>
+							<Link to="/" className="nav-link" onClick={this.props.logout} >{lang.logout(this.props.lang)}</Link>
 						</li>:null}
 					</ul>
 				</div>
@@ -57,7 +57,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
 	logout: () => dispatch({ type : actionTypes.LOGOUT }),
 	autoLogin : () => dispatch({ type : actionTypes.AUTO_LOGIN }),
-	switchLang : () => dispatch({ type : actionTypes.SWITCH_LANG })
+	switchLang : (current) => dispatch({ type : actionTypes.SWITCH_LANG_SAGA, lang : current })
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

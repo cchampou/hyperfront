@@ -50,3 +50,16 @@ export function* processAccountSaga ( action ) {
 		});
 	}
 }
+
+export function* switchLangSaga( action ) {
+	try {
+		yield put({
+			type : actionTypes.SWITCH_LANG
+		});
+		yield authRequest('/user', 'patch', {
+			language : (action.lang === 'fr')?'english':'french'
+		});
+	} catch ( err ) {
+		console.log(err);
+	}
+}

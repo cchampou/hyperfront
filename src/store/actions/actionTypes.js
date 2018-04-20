@@ -26,6 +26,7 @@ export const LOG_USER_IN = 'LOG_USER_IN';
 export const LOG_USER_OUT = 'LOG_USER_OUT';
 export const UPDATE_USER = 'UPDATE_USER';
 export const SWITCH_LANG = 'SWITCH_LANG';
+export const SWITCH_LANG_SAGA = 'SWITCH_LANG_SAGA';
 
 // Play
 
@@ -65,3 +66,5 @@ export const GET_MOVIE = 'GET_MOVIE';
 export const GET_CASTING = 'GET_CASTING';
 export const GET_CASTING_SAGA = 'GET_CASTING_SAGA';
 export const LOADING_MOVIES = 'LOADING_MOVIES';
+export const GET_COMMENTS_SAGA = 'GET_COMMENTS_SAGA';
+export const GET_COMMENTS = 'GET_COMMENTS';

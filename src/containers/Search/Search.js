@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
-import { Redirect } from 'react-router-dom'
+import { Redirect, Link } from 'react-router-dom'
 import FontAwesomeIcon from '@fortawesome/react-fontawesome'
 import faStar from '@fortawesome/fontawesome-free-solid/faStar'
 import { connect } from "react-redux";
 import * as actionTypes from '../../store/actions/actionTypes';
 import poster from '../../assets/img/poster.png';
 import Loading from '../../utils/Loader';
+import * as lang from './Search.lang';
 
 class Search extends Component {
 
@@ -43,6 +44,7 @@ class Search extends Component {
 		return (
 			<div className="container-fluid">
 				{(this.state.selection !== false) ? <Redirect to={'/play/'+this.state.selection} push={true} />:null}
+				{(this.props.isLoggedIn)?
 				<div className="row p-4">
 					<div className="col-lg-2 col-md-3 col-sm-4 bg-dark">
 						<div className="form-group my-4">
@@ -81,6 +83,14 @@ class Search extends Component {
 						</div>}
 					</div>
 				</div>
+				:<div className="row justify-content-center align-items-center" style={{ marginTop : '20%' }}>
+					<div className="col-4 text-center bg-dark p-4">
+						<h1 className="text-center">HyperTube</h1>
+						<h2 className="text-center text-muted">{lang.slogan(this.props.lang)}</h2>
+						<Link to="/login" className="btn btn-primary my-2 form-control">{lang.login(this.props.lang)}</Link><br />
+						<Link to="/signup" className="btn btn-secondary my-2 form-control">{lang.signup(this.props.lang)}</Link>
+					</div>
+				</div>}
 			</div>
 		)
 	}
@@ -91,7 +101,8 @@ const mapStateToProps = state => ({
 	genre_en : state.genre.genres_en,
 	lang : state.user.lang,
 	movies : state.movie.movies,
-	loading : state.movie.loadingList
+	loading : state.movie.loadingList,
+	isLoggedIn : state.user.isLoggedIn
 })
 
 const mapDispatchToProps = dispatch => ({
