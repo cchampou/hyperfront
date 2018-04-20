@@ -18,7 +18,11 @@ class Search extends Component {
 			movies : props.movies,
 			genre : 0,
 			loading : false,
-			page : 1
+			page : 1,
+			dgte : '1900',
+			dlte : '2018',
+			vgte : 0,
+			vlte : 10
 		}
 	}
 
@@ -47,7 +51,7 @@ class Search extends Component {
 					loading : true
 				})
 				console.log("Loading more");
-				this.props.getMovies(this.state.genre, this.props.lang, this.props.page, this.state.search);	
+				this.props.getMovies(this.state.genre, this.props.lang, this.props.page, this.state.search, this.state.dgte, this.state.dlte, this.state.vgte, this.state.vlte);	
 			} else {
 				console.log("not eligible");
 			}
@@ -86,6 +90,21 @@ class Search extends Component {
 		this.handleScroll();
 	}
 
+	handleInput = e => {
+		this.setState({
+			[e.target.name] : e.target.value
+		})
+		if (e.target.value.length === 4) {
+			this.props.resetMovies();
+			this.handleScroll();
+		}
+		if ((e.target.name === 'vgte' || e.target.name === 'vlte') && e.target.value <= 10 && e.target.value >= 0) {
+			this.props.resetMovies();
+			this.handleScroll();
+		}
+	}
+
+
 	render () {
 		return (
 			<div className="container-fluid">
@@ -103,15 +122,33 @@ class Search extends Component {
 						</div>
 						<h5>Genres</h5>
 						{(this.props.lang === 'fr') && this.props.genre_fr.map((e, key) => (
-							<div key={key} className={((this.state.genre === e.id)?'text-primary':'text-light')+" btn btn-link form-control"} onClick={this.selectGenre.bind(this, e.id)} >
+							<div key={key} className={((this.state.genre === e.id)?'text-primary':'text-light')+" btn btn-link"} onClick={this.selectGenre.bind(this, e.id)} >
 								<span>{e.name}</span><br />
 							</div>
 						))}
 						{(this.props.lang === 'en') && this.props.genre_en.map((e, key) => (
-							<div key={key} className={((this.state.genre === e.id)?'text-primary':'text-light')+" btn btn-link form-control"} onClick={this.selectGenre.bind(this, e.id)} >
+							<div key={key} className={((this.state.genre === e.id)?'text-primary':'text-light')+" btn btn-link"} onClick={this.selectGenre.bind(this, e.id)} >
 								<span>{e.name}</span><br />
 							</div>
 						))}
+						<h5 className="my-4">Filtrer par date</h5>
+						<div className="row">
+							<div className="col-6">
+								<input type="number" className="form-control" min="1900" max="2018" step="1" placeholder="min." onChange={this.handleInput} name="dgte" value={this.state.dgte} />
+							</div>
+							<div className="col-6">
+								<input type="number" className="form-control" min="1900" max="2018" step="1" placeholder="max." onChange={this.handleInput} name="dlte" value={this.state.dlte} />
+							</div>
+						</div>
+						<h5 className="my-4">Filtrer par note</h5>
+						<div className="row mb-4">
+							<div className="col-6">
+								<input type="number" className="form-control" min="0" max="10" step="0.1" placeholder="min." onChange={this.handleInput} name="vgte" value={this.state.vgte} />
+							</div>
+							<div className="col-6">
+								<input type="number" className="form-control" min="0" max="10" step="0.1" placeholder="max." onChange={this.handleInput} name="vlte" value={this.state.vlte} />
+							</div>
+						</div>
 					</div>
 					<div className="col-lg-10 col-md-9 col-sm-8">
 						<div className="row justify-content-center">
@@ -154,7 +191,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
 	getGenres : () => dispatch({ type : actionTypes.GET_GENRES_SAGA }),
-	getMovies : (genre, lang, page, name) => dispatch({ type : actionTypes.GET_MOVIES_SAGA, genre, lang, page, name }),
+	getMovies : (genre, lang, page, name, dgte, dlte, vgte, vlte) => dispatch({ type : actionTypes.GET_MOVIES_SAGA, genre, lang, page, name, dgte, dlte, vgte, vlte }),
 	resetMovies : () => dispatch({ type : actionTypes.RESET_MOVIES })
 })
 

@@ -11,7 +11,12 @@ export function* getMoviesSaga( action ) {
         type : actionTypes.LOADING_MOVIES
     });
     try {
-        const movies = yield authRequest('/video/'+action.lang+'/'+action.genre+'/'+action.page+'/'+action.name, 'get');
+        const dgte = (action.dgte)?action.dgte:'1970';
+        const dlte = (action.dlte)?action.dlte:'2019';
+        const vgte = (action.vgte)?action.vgte:0;
+        const vlte = (action.vlte)?action.vlte:10;
+        const sort = (action.sort)?action.sort:'popularity.desc';
+        const movies = yield authRequest('/video/'+action.lang+'/'+action.genre+'/'+action.page+'/'+dgte+'/'+dlte+'/'+vgte+'/'+vlte+'/'+sort+'/'+action.name, 'get');
         if (movies)
         {
             yield put({
