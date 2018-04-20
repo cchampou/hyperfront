@@ -12,5 +12,5 @@ export const signup = lang => (
 )
 
 export const logout = lang => (
-    (lang === 'fr')?"Se déconnecter":"Log out"
+    (lang === 'fr')?"Se deconnecter":"Log out"
 )

@@ -2,7 +2,8 @@
 import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
-    movies : [],
+    movies : null,
+    page : 1,
     loadingList : false,
     movie_fr : {},
     movie_en : {},
@@ -24,10 +25,20 @@ const reducer = ( state = initialState, action) => {
                 ...state,
                 loadingList : true
             }
+        case actionTypes.RESET_MOVIES:
+            return {
+                ...state,
+                movies : [],
+                page : 1
+            }
         case actionTypes.GET_MOVIES:
             return {
                 ...state,
-                movies : action.movies,
+                movies : [
+                    ...state.movies,
+                    ...action.movies
+                ],
+                page : state.page + 1,
                 loadingList : false
             }
         case actionTypes.GET_MOVIE:

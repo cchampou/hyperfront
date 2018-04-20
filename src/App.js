@@ -11,6 +11,7 @@ import Signup from './containers/Signup/Signup';
 import Account from './containers/Account/Account';
 import ResetPass from './containers/ResetPass/ResetPass';
 import Auth from './containers/Auth/Auth';
+import Profile from './containers/Profile/Profile';
 
 import './App.css';
 
@@ -26,6 +27,7 @@ const App = () => (
 					<Route path="/account" exact component={Account} />
 					<Route path="/signup" exact component={Signup} />
 					<Route path="/resetpass" exact component={ResetPass} />
+					<Route path="/user/:id" exact component={Profile} />
 				</Switch>
 				<Footer />
 			</div>

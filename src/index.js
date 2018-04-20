@@ -16,6 +16,7 @@ import play from './store/reducers/play';
 import account from './store/reducers/account';
 import genre from './store/reducers/genre';
 import movie from './store/reducers/movie';
+import profile from './store/reducers/profile';
 
 import { sagaWatcher } from './store/sagas';
 
@@ -27,7 +28,8 @@ const rootReducer = combineReducers({
 	play,
 	account,
 	genre,
-	movie
+	movie,
+	profile
 });
 
 const sagaMiddleware = createSagaMiddleware();

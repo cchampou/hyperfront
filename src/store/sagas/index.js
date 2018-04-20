@@ -1,5 +1,5 @@
 
-import { takeLatest } from 'redux-saga/effects'
+import { takeEvery, actionChannel } from 'redux-saga/effects'
 
 import * as actionTypes from '../actions/actionTypes'
 
@@ -9,21 +9,23 @@ import { processCommentSaga } from './play'
 import { processAccountSaga, switchLangSaga } from './account'
 import { getGenresSaga } from './genre'
 import { getMoviesSaga, getMovieSaga, getCastingSaga, getCommentsSaga } from './movie';
+import { getProfileSaga } from './profile';
 
 export function* sagaWatcher() {
-	yield takeLatest(actionTypes.LOGIN_PROCESS, loginSaga);
-	yield takeLatest(actionTypes.LOGIN_LOCAL, loginLocal);
-	yield takeLatest(actionTypes.LOGOUT, logout);
-	yield takeLatest(actionTypes.SIGNUP_PROCESS, signUpSaga);
-	yield takeLatest(actionTypes.PROCESS_COMMENT, processCommentSaga);
-	yield takeLatest(actionTypes.PROCESS_ACCOUNT, processAccountSaga);
-	yield takeLatest(actionTypes.AUTO_LOGIN, autoLoginSaga);
-	yield takeLatest(actionTypes.EXTERNAL_LOGIN, externalLoginSaga);
-	yield takeLatest(actionTypes.RESET_PASS_PROCESS, resetPassSaga);
-	yield takeLatest(actionTypes.GET_GENRES_SAGA, getGenresSaga);
-	yield takeLatest(actionTypes.GET_MOVIES_SAGA, getMoviesSaga);
-	yield takeLatest(actionTypes.GET_MOVIE_SAGA, getMovieSaga);
-	yield takeLatest(actionTypes.GET_CASTING_SAGA, getCastingSaga);
-	yield takeLatest(actionTypes.SWITCH_LANG_SAGA, switchLangSaga);
-	yield takeLatest(actionTypes.GET_COMMENTS_SAGA, getCommentsSaga);
+	yield takeEvery(actionTypes.LOGIN_PROCESS, loginSaga);
+	yield takeEvery(actionTypes.LOGIN_LOCAL, loginLocal);
+	yield takeEvery(actionTypes.LOGOUT, logout);
+	yield takeEvery(actionTypes.SIGNUP_PROCESS, signUpSaga);
+	yield takeEvery(actionTypes.PROCESS_COMMENT, processCommentSaga);
+	yield takeEvery(actionTypes.PROCESS_ACCOUNT, processAccountSaga);
+	yield takeEvery(actionTypes.AUTO_LOGIN, autoLoginSaga);
+	yield takeEvery(actionTypes.EXTERNAL_LOGIN, externalLoginSaga);
+	yield takeEvery(actionTypes.RESET_PASS_PROCESS, resetPassSaga);
+	yield takeEvery(actionTypes.GET_GENRES_SAGA, getGenresSaga);
+	yield takeEvery(actionTypes.GET_MOVIES_SAGA, getMoviesSaga);
+	yield takeEvery(actionTypes.GET_MOVIE_SAGA, getMovieSaga);
+	yield takeEvery(actionTypes.GET_CASTING_SAGA, getCastingSaga);
+	yield takeEvery(actionTypes.SWITCH_LANG_SAGA, switchLangSaga);
+	yield takeEvery(actionTypes.GET_COMMENTS_SAGA, getCommentsSaga);
+	yield takeEvery(actionTypes.GET_PROFILE_SAGA, getProfileSaga);
 }

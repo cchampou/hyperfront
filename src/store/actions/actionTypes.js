@@ -59,6 +59,7 @@ export const GET_GENRES_SAGA = 'GET_GENRES_SAGA';
 
 // Movies
 
+export const RESET_MOVIES = 'RESET_MOVIES';
 export const GET_MOVIES = 'GET_MOVIES';
 export const GET_MOVIES_SAGA = 'GET_MOVIES_SAGA';
 export const GET_MOVIE_SAGA = 'GET_MOVIE_SAGA';
@@ -68,3 +69,9 @@ export const GET_CASTING_SAGA = 'GET_CASTING_SAGA';
 export const LOADING_MOVIES = 'LOADING_MOVIES';
 export const GET_COMMENTS_SAGA = 'GET_COMMENTS_SAGA';
 export const GET_COMMENTS = 'GET_COMMENTS';
+
+// Profile
+
+export const LOADING_PROFILE = 'LOADING_PROFILE';
+export const GET_PROFILE = 'GET_PROFILE';
+export const GET_PROFILE_SAGA = 'GET_PROFILE_SAGA';
