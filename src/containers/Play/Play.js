@@ -45,6 +45,16 @@ class Play extends Component {
 		this.props.getCasting(this.props.match.params.id);
 	}
 
+	componentWillUnmount (){
+		console.log("UNMOUNT");
+		if (this.state.received){
+			console.log("DESTROYED");
+			this.state.received.destroy();
+			console.log(this.state.received);
+		}
+
+	}
+
 	componentWillReceiveProps ( { comment, fail, success, fr, en, lang, cast_en, cast_fr, comments, username } ) {
 		let received = false;
 
@@ -52,7 +62,7 @@ class Play extends Component {
             let video = document.getElementById('example-video');
 
             if(Hls.isSupported()) {
-                let hls = new Hls({
+                var hls = new Hls({
                     manifestLoadingTimeOut: 240000,
                     manifestLoadingMaxRetry: 2,
                     autoStartLoad: false
@@ -62,6 +72,7 @@ class Play extends Component {
                 hls.loadSource(`http://localhost:3000/video/m3u?id=${username}&name=${this.props[this.props.lang].title}`);
                 hls.attachMedia(video);
                 hls.on(Hls.Events.MANIFEST_PARSED,function() {
+                	console.log("PARSED");
                     hls.startLoad(0);
                 });
             }
@@ -70,7 +81,7 @@ class Play extends Component {
                 video.addEventListener('canplay', function () {
                 });
             }
-            received = true;
+            received = hls;
         }
         console.log("RECEIVED");
         console.log(this.props[this.props.lang]);
@@ -116,7 +127,7 @@ class Play extends Component {
 						</div>
 						<div className="row py-4 my-4 bg-dark">
 							<div className="col">
-							<video controls>
+							<video id="example-video" style={{ width : '100%' }} controls>
 							</video>
 							</div>
 						</div>
