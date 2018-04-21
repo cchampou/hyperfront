@@ -45,6 +45,10 @@ class Play extends Component {
 		this.props.getCasting(this.props.match.params.id);
 	}
 
+	componentWillUnmount() {
+		this.props.reset();
+	}
+
 	componentWillReceiveProps ( { comment, fail, success, fr, en, lang, cast_en, cast_fr, comments, username } ) {
 		let received = false;
 
@@ -171,7 +175,8 @@ const mapDispatchToProps = dispatch => {
 		getMovie : id => dispatch({ type : actionTypes.GET_MOVIE_SAGA, id : id }),
 		getCasting : id => dispatch({ type : actionTypes.GET_CASTING_SAGA, id : id }),
 		submitComment: (comment, videoId) => dispatch(processComment(comment, videoId)),
-		resetComment: () => dispatch(resetComment())
+		resetComment: () => dispatch(resetComment()),
+		reset : () => dispatch({ type : actionTypes.RESET_MOVIE })
 	}
 }
 

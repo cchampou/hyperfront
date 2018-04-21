@@ -69,6 +69,7 @@ export const GET_CASTING_SAGA = 'GET_CASTING_SAGA';
 export const LOADING_MOVIES = 'LOADING_MOVIES';
 export const GET_COMMENTS_SAGA = 'GET_COMMENTS_SAGA';
 export const GET_COMMENTS = 'GET_COMMENTS';
+export const RESET_MOVIE = 'RESET_MOVIE';
 
 // Profile
 

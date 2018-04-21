@@ -22,7 +22,8 @@ class Search extends Component {
 			dgte : '1900',
 			dlte : '2018',
 			vgte : 0,
-			vlte : 10
+			vlte : 10,
+			sort : 'popularity.desc'
 		}
 	}
 
@@ -32,28 +33,22 @@ class Search extends Component {
 		this.props.resetMovies();
 		this.handleScroll();
 		this.props.getGenres();
-		// this.props.getMovies(this.state.genre, this.props.lang, this.props.page, this.state.search);	
 		window.addEventListener("scroll", this.handleScroll);
 	}
 
 	handleScroll = () => {
 		setTimeout(() => {
-			console.log("scroll detected");
 			const windowHeight = "innerHeight" in window ? window.innerHeight : document.documentElement.offsetHeight;
 			const body = document.body;
 			const html = document.documentElement;
 			const docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight,  html.scrollHeight, html.offsetHeight);
-			console.log('doc height ',docHeight);
 			const windowBottom = windowHeight + window.pageYOffset;
-			console.log('bottom ',windowBottom);		
 			if (windowBottom >= docHeight - 50 && this.state.loading === false) {
 				this.setState({
 					loading : true
 				})
-				console.log("Loading more");
-				this.props.getMovies(this.state.genre, this.props.lang, this.props.page, this.state.search, this.state.dgte, this.state.dlte, this.state.vgte, this.state.vlte);	
+				this.props.getMovies(this.state.genre, this.props.lang, this.props.page, this.state.search, this.state.dgte, this.state.dlte, this.state.vgte, this.state.vlte, this.state.sort);	
 			} else {
-				console.log("not eligible");
 			}
 		}, 250);
 	}
@@ -74,8 +69,6 @@ class Search extends Component {
 
 	search = (e) => {
 		this.setState({ search : e.target.value });
-		this.props.resetMovies();
-		this.handleScroll();
 	}
 
 	select = (id) => {
@@ -83,6 +76,7 @@ class Search extends Component {
 	}
 	
 	selectGenre = genreId => {
+		this.setState({ search : '' });
 		this.setState({
 			genre : genreId
 		});
@@ -90,20 +84,71 @@ class Search extends Component {
 		this.handleScroll();
 	}
 
+	submitInputs = (e) => {
+		if (this.state.search) {
+			this.setState({
+				genre : ''
+			});
+		}
+		e.preventDefault();
+		this.props.resetMovies();
+		this.handleScroll();
+	}
+
 	handleInput = e => {
+		this.setState({ search : '' });
 		this.setState({
 			[e.target.name] : e.target.value
 		})
-		if (e.target.value.length === 4) {
-			this.props.resetMovies();
-			this.handleScroll();
-		}
-		if ((e.target.name === 'vgte' || e.target.name === 'vlte') && e.target.value <= 10 && e.target.value >= 0) {
-			this.props.resetMovies();
-			this.handleScroll();
-		}
+		// if (e.target.value.length === 4) {
+		// 	this.props.resetMovies();
+		// 	this.handleScroll();
+		// }
+		// if ((e.target.name === 'vgte' || e.target.name === 'vlte') && e.target.value <= 10 && e.target.value >= 0) {
+		// 	this.props.resetMovies();
+		// 	this.handleScroll();
+		// }
 	}
 
+	handleSort = (crit) => {
+		if (crit === 'pop') {
+			if (this.state.sort === 'popularity.desc') {
+				this.setState({
+					sort : 'popularity.asc'
+				});
+			} else {
+				this.setState({
+					sort : 'popularity.desc'
+				});
+			}
+		} else if (crit === 'vote') {
+			if (this.state.sort === 'vote_average.desc') {
+				this.setState({
+					sort : 'vote_average.asc'
+				});
+			} else {
+				this.setState({
+					sort : 'vote_average.desc'
+				});
+			}
+		} else if (crit === 'date') {
+			if (this.state.sort === 'release_date.desc') {
+				this.setState({
+					sort : 'release_date.asc'
+				});
+			} else {
+				this.setState({
+					sort : 'release_date.desc'
+				});
+			}
+		} else {
+			this.setState({
+				sort : 'popularity.desc'
+			});
+		}
+		this.props.resetMovies();
+		this.handleScroll();
+	}
 
 	render () {
 		return (
@@ -112,15 +157,19 @@ class Search extends Component {
 				{(this.props.isLoggedIn)?
 				<div className="row p-4">
 					<div className="col-lg-2 col-md-3 col-sm-4 bg-dark">
-						<div className="form-group my-4">
+						<form onSubmit={this.submitInputs.bind(this)} className="form-group my-4">
 							<input
 								type="text"
 								className="form-control"
 								onChange={this.search}
 								value={this.state.search}
 								placeholder="Rechercher..." />
-						</div>
-						<h5>Genres</h5>
+						</form>
+						<h5 className="my-4">Trier par</h5>
+						<span className={((this.state.sort === 'popularity.desc' || this.state.sort === 'popularity.asc')?'text-primary':'text-light')+" btn btn-link"} onClick={this.handleSort.bind(this, 'pop')}>Popularité</span>
+						<span className={((this.state.sort === 'vote_average.desc' || this.state.sort === 'vote_average.asc')?'text-primary':'text-light')+" btn btn-link"} onClick={this.handleSort.bind(this, 'vote')}>Note</span>
+						<span className={((this.state.sort === 'release_date.desc' || this.state.sort === 'release_date.asc')?'text-primary':'text-light')+" btn btn-link"} onClick={this.handleSort.bind(this, 'date')}>Date de sortie</span>
+						<h5 className="my-4">Genres</h5>
 						{(this.props.lang === 'fr') && this.props.genre_fr.map((e, key) => (
 							<div key={key} className={((this.state.genre === e.id)?'text-primary':'text-light')+" btn btn-link"} onClick={this.selectGenre.bind(this, e.id)} >
 								<span>{e.name}</span><br />
@@ -133,21 +182,21 @@ class Search extends Component {
 						))}
 						<h5 className="my-4">Filtrer par date</h5>
 						<div className="row">
-							<div className="col-6">
+							<form onSubmit={this.submitInputs.bind(this)} className="col-6">
 								<input type="number" className="form-control" min="1900" max="2018" step="1" placeholder="min." onChange={this.handleInput} name="dgte" value={this.state.dgte} />
-							</div>
-							<div className="col-6">
+							</form>
+							<form onSubmit={this.submitInputs.bind(this)} className="col-6">
 								<input type="number" className="form-control" min="1900" max="2018" step="1" placeholder="max." onChange={this.handleInput} name="dlte" value={this.state.dlte} />
-							</div>
+							</form>
 						</div>
 						<h5 className="my-4">Filtrer par note</h5>
 						<div className="row mb-4">
-							<div className="col-6">
+							<form onSubmit={this.submitInputs.bind(this)} className="col-6">
 								<input type="number" className="form-control" min="0" max="10" step="0.1" placeholder="min." onChange={this.handleInput} name="vgte" value={this.state.vgte} />
-							</div>
-							<div className="col-6">
+							</form>
+							<form onSubmit={this.submitInputs.bind(this)} className="col-6">
 								<input type="number" className="form-control" min="0" max="10" step="0.1" placeholder="max." onChange={this.handleInput} name="vlte" value={this.state.vlte} />
-							</div>
+							</form>
 						</div>
 					</div>
 					<div className="col-lg-10 col-md-9 col-sm-8">
@@ -191,7 +240,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
 	getGenres : () => dispatch({ type : actionTypes.GET_GENRES_SAGA }),
-	getMovies : (genre, lang, page, name, dgte, dlte, vgte, vlte) => dispatch({ type : actionTypes.GET_MOVIES_SAGA, genre, lang, page, name, dgte, dlte, vgte, vlte }),
+	getMovies : (genre, lang, page, name, dgte, dlte, vgte, vlte, sort) => dispatch({ type : actionTypes.GET_MOVIES_SAGA, genre, lang, page, name, dgte, dlte, vgte, vlte, sort }),
 	resetMovies : () => dispatch({ type : actionTypes.RESET_MOVIES })
 })
 
