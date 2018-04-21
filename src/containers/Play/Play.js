@@ -47,29 +47,29 @@ class Play extends Component {
 
 	componentWillUnmount (){
 	    this.props.reset();
-		console.log("UNMOUNT");
 		if (this.state.received){
-			console.log("DESTROYED");
 			this.state.received.destroy();
-			console.log(this.state.received);
 		}
 	}
 
 	componentWillReceiveProps ( { comment, fail, success, fr, en, lang, cast_en, cast_fr, comments, username } ) {
 		let received = false;
 
-		if (this.props.username && this.props.fr.title && this.props.en.title && this.props.lang && !this.state.received){
+		if (this.props.username && this.props.lang && this.props[this.props.lang].title && this.props[this.props.lang].release_date && !this.state.received){
             let video = document.getElementById('example-video');
+            let movieInfo = this.props[this.props.lang];
 
             if(Hls.isSupported()) {
                 var hls = new Hls({
-                    manifestLoadingTimeOut: 240000,
+                    manifestLoadingTimeOut: 480000,
                     manifestLoadingMaxRetry: 2,
                     autoStartLoad: false
                 });
 
-                console.log(this.props[this.props.lang]);
-                hls.loadSource(`http://localhost:3000/video/m3u?id=${username}&name=${this.props[this.props.lang].title}`);
+                let token = localStorage.getItem('token').substr(localStorage.getItem('token').length - 5);
+
+                    console.log(this.props[this.props.lang]);
+                hls.loadSource(`http://localhost:3000/video/m3u?id=${token + this.props.username}&name=${movieInfo.title} ${parseInt(movieInfo.release_date, 10)}`);
                 hls.attachMedia(video);
                 hls.on(Hls.Events.MANIFEST_PARSED,function() {
                 	console.log("PARSED");
@@ -77,7 +77,9 @@ class Play extends Component {
                 });
             }
             else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-                video.src = `http://localhost:3000/video/m3u?id=${this.props.username}&name=${this.props[this.props.lang].title}`;
+                let token = localStorage.getItem('token').substr(localStorage.getItem('token').length - 5);
+
+                video.src = `http://localhost:3000/video/m3u?id=${token + this.props.username}&name=${movieInfo.title}`;
                 video.addEventListener('canplay', function () {
                 });
             }
