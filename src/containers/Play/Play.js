@@ -17,6 +17,14 @@ import Comment from '../../components/Play/Comment'
 
 import Hls from 'hls.js';
 
+
+import uniqid from 'uniqid';
+
+import io from 'socket.io-client';
+
+const socket = io('http://localhost:3000');
+
+
 class Play extends Component {
 
 	constructor (props) {
@@ -66,10 +74,10 @@ class Play extends Component {
                     autoStartLoad: false
                 });
 
-                let token = localStorage.getItem('token').substr(localStorage.getItem('token').length - 5);
+                let sessionId = uniqid();
 
                     console.log(this.props[this.props.lang]);
-                hls.loadSource(`http://localhost:3000/video/m3u?id=${token + this.props.username}&name=${movieInfo.title} ${parseInt(movieInfo.release_date, 10)}`);
+                hls.loadSource(`http://localhost:3000/video/m3u?id=${sessionId}&name=${movieInfo.title} ${parseInt(movieInfo.release_date, 10)}`);
                 hls.attachMedia(video);
                 hls.on(Hls.Events.MANIFEST_PARSED,function() {
                 	console.log("PARSED");
@@ -77,9 +85,9 @@ class Play extends Component {
                 });
             }
             else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-                let token = localStorage.getItem('token').substr(localStorage.getItem('token').length - 5);
+                let sessionId = uniqid();
 
-                video.src = `http://localhost:3000/video/m3u?id=${token + this.props.username}&name=${movieInfo.title}`;
+                video.src = `http://localhost:3000/video/m3u?id=${sessionId}&name=${movieInfo.title}`;
                 video.addEventListener('canplay', function () {
                 });
             }
