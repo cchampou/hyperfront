@@ -35,6 +35,7 @@ class Play extends Component {
 			success: props.success,
 			casting : 'Franck Gastambide, Malik Bentalha, Bernard Farcy',
 			received: false,
+			uniqId: null,
 			comments : [],
 			details : {
 				poster_path : '',
@@ -57,6 +58,7 @@ class Play extends Component {
 	componentWillUnmount (){
 	    this.props.reset();
 		if (this.state.received){
+			socket.emit('deleteStream', this.state.uniqId);
 			this.state.received.destroy();
 		}
 	}
@@ -66,6 +68,7 @@ class Play extends Component {
 		if (this.props.username && this.props.lang && this.props[this.props.lang].title && this.props[this.props.lang].release_date && !this.state.received){
             let video = document.getElementById('example-video');
             let movieInfo = this.props[this.props.lang];
+            let sessionId = uniqid();
 
             if(Hls.isSupported()) {
                 var hls = new Hls({
@@ -74,7 +77,6 @@ class Play extends Component {
                     autoStartLoad: false
                 });
 
-                let sessionId = uniqid();
 
                     console.log(this.props[this.props.lang]);
                 hls.loadSource(`http://localhost:3000/video/m3u?id=${sessionId}&name=${movieInfo.title} ${parseInt(movieInfo.release_date, 10)}`);
@@ -85,13 +87,12 @@ class Play extends Component {
                 });
             }
             else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-                let sessionId = uniqid();
 
                 video.src = `http://localhost:3000/video/m3u?id=${sessionId}&name=${movieInfo.title}`;
                 video.addEventListener('canplay', function () {
                 });
             }
-            this.setState({ received : hls })
+            this.setState({ received : hls , uniqId: sessionId});
         }
         console.log("RECEIVED");
         console.log(this.props[this.props.lang]);
