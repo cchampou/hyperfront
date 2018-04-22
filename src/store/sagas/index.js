@@ -1,5 +1,5 @@
 
-import { takeEvery, actionChannel } from 'redux-saga/effects'
+import { takeEvery } from 'redux-saga/effects'
 
 import * as actionTypes from '../actions/actionTypes'
 

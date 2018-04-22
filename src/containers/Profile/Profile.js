@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import profile from '../../assets/img/profile.svg';
 import Loading from '../../utils/Loader';
 import * as actionTypes from '../../store/actions/actionTypes';
-import { processAccount } from '../../store/actions/account';
 
 import * as lang from './Profile.lang'
 
@@ -24,7 +23,7 @@ class Profile extends Component {
                             {lang.loading(this.props.lang)}
                         </div>
                         :<div>
-                            <img className="img-thumbnail w-50 my-4" src={(this.props.profile.avatar)?this.props.profile.avatar:profile} />
+                            <img className="img-thumbnail w-50 my-4" src={(this.props.profile.avatar)?this.props.profile.avatar:profile} alt="profile" />
                             <h2 className="text-muted">{this.props.profile.username}</h2>
                             <h1>{this.props.profile.firstname} {this.props.profile.name}</h1>
                             <p className="lead">
@@ -47,4 +46,4 @@ const mapDispatchToProps = dispatch => ({
     getProfile : id => dispatch({ type : actionTypes.GET_PROFILE_SAGA, id })
 });
 
-;export default connect(mapStateToProps, mapDispatchToProps)(Profile);
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);

@@ -27,6 +27,7 @@ export const LOG_USER_OUT = 'LOG_USER_OUT';
 export const UPDATE_USER = 'UPDATE_USER';
 export const SWITCH_LANG = 'SWITCH_LANG';
 export const SWITCH_LANG_SAGA = 'SWITCH_LANG_SAGA';
+export const MARK_MOVIE_SEEN = 'MARK_MOVIE_SEEN';
 
 // Play
 
