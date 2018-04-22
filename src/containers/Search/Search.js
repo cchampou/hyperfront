@@ -29,11 +29,14 @@ class Search extends Component {
 
 
 	componentDidMount() {
-		console.log("test");
 		this.props.resetMovies();
 		this.handleScroll();
 		this.props.getGenres();
 		window.addEventListener("scroll", this.handleScroll);
+	}
+
+	componentWillUnmount() {
+		window.removeEventListener("scroll", this.handleScroll);		
 	}
 
 	handleScroll = () => {
@@ -100,14 +103,6 @@ class Search extends Component {
 		this.setState({
 			[e.target.name] : e.target.value
 		})
-		// if (e.target.value.length === 4) {
-		// 	this.props.resetMovies();
-		// 	this.handleScroll();
-		// }
-		// if ((e.target.name === 'vgte' || e.target.name === 'vlte') && e.target.value <= 10 && e.target.value >= 0) {
-		// 	this.props.resetMovies();
-		// 	this.handleScroll();
-		// }
 	}
 
 	handleSort = (crit) => {
