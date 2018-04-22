@@ -61,7 +61,6 @@ class Play extends Component {
 	}
 
 	componentWillReceiveProps ( { comment, fail, success, fr, en, lang, cast_en, cast_fr, comments, username } ) {
-		let received = false;
 
 		if (this.props.username && this.props.lang && this.props[this.props.lang].title && this.props[this.props.lang].release_date && !this.state.received){
             let video = document.getElementById('example-video');
@@ -91,7 +90,7 @@ class Play extends Component {
                 video.addEventListener('canplay', function () {
                 });
             }
-            received = hls;
+            this.setState({ received : hls })
         }
         console.log("RECEIVED");
         console.log(this.props[this.props.lang]);
@@ -102,8 +101,7 @@ class Play extends Component {
 			success,
 			details : (lang === 'en')?en:fr,
 			cast : (lang === 'en')?cast_en:cast_fr,
-			comments,
-			received: received
+			comments
 		})
 	}
 
