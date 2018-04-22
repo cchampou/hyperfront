@@ -6,6 +6,7 @@ const initialState = {
     name : '',
     firstname : '',
     avatar : '',
+    seen : [],
     loading : false
 }
 
@@ -23,6 +24,7 @@ const reducer = ( state = initialState, action) => {
                 firstname : action.data.firstName,
                 name : action.data.lastName,
                 avatar : action.data.avatar,
+                seen : action.data.seen,
                 loading : false
             }
         default:

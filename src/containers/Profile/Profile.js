@@ -27,7 +27,7 @@ class Profile extends Component {
                             <h2 className="text-muted">{this.props.profile.username}</h2>
                             <h1>{this.props.profile.firstname} {this.props.profile.name}</h1>
                             <p className="lead">
-                                <strong>{lang.nbviews(this.props.lang)} : </strong><br />
+                                <strong>{lang.nbviews(this.props.lang)} : {this.props.profile.seen.length}</strong><br />
                             </p>
                         </div>}
                     </div>
