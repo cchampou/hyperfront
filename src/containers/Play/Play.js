@@ -17,6 +17,14 @@ import Comment from '../../components/Play/Comment'
 
 import Hls from 'hls.js';
 
+
+import uniqid from 'uniqid';
+
+import io from 'socket.io-client';
+
+const socket = io('http://localhost:3000');
+
+
 class Play extends Component {
 
 	constructor (props) {
@@ -47,29 +55,29 @@ class Play extends Component {
 
 	componentWillUnmount (){
 	    this.props.reset();
-		console.log("UNMOUNT");
 		if (this.state.received){
-			console.log("DESTROYED");
 			this.state.received.destroy();
-			console.log(this.state.received);
 		}
 	}
 
 	componentWillReceiveProps ( { comment, fail, success, fr, en, lang, cast_en, cast_fr, comments, username } ) {
 		let received = false;
 
-		if (this.props.username && this.props.fr.title && this.props.en.title && this.props.lang && !this.state.received){
+		if (this.props.username && this.props.lang && this.props[this.props.lang].title && this.props[this.props.lang].release_date && !this.state.received){
             let video = document.getElementById('example-video');
+            let movieInfo = this.props[this.props.lang];
 
             if(Hls.isSupported()) {
                 var hls = new Hls({
-                    manifestLoadingTimeOut: 240000,
+                    manifestLoadingTimeOut: 480000,
                     manifestLoadingMaxRetry: 2,
                     autoStartLoad: false
                 });
 
-                console.log(this.props[this.props.lang]);
-                hls.loadSource(`http://localhost:3000/video/m3u?id=${username}&name=${this.props[this.props.lang].title}`);
+                let sessionId = uniqid();
+
+                    console.log(this.props[this.props.lang]);
+                hls.loadSource(`http://localhost:3000/video/m3u?id=${sessionId}&name=${movieInfo.title} ${parseInt(movieInfo.release_date, 10)}`);
                 hls.attachMedia(video);
                 hls.on(Hls.Events.MANIFEST_PARSED,function() {
                 	console.log("PARSED");
@@ -77,7 +85,9 @@ class Play extends Component {
                 });
             }
             else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-                video.src = `http://localhost:3000/video/m3u?id=${this.props.username}&name=${this.props[this.props.lang].title}`;
+                let sessionId = uniqid();
+
+                video.src = `http://localhost:3000/video/m3u?id=${sessionId}&name=${movieInfo.title}`;
                 video.addEventListener('canplay', function () {
                 });
             }
