@@ -23,7 +23,8 @@ class Search extends Component {
 			dlte : '2018',
 			vgte : 0,
 			vlte : 10,
-			sort : 'popularity.desc'
+			sort : 'popularity.desc',
+			seen : []
 		}
 	}
 
@@ -60,7 +61,8 @@ class Search extends Component {
 		this.setState({
 			loading : next.loading,
 			page : next.page,
-			movies : next.movies
+			movies : next.movies,
+			seen : next.seen
 		});
 		if (next.lang !== this.props.lang) {
 			this.props.resetMovies();
@@ -202,6 +204,7 @@ class Search extends Component {
 									<div className="card-body">
 										<h5 className="card-title">{elem.title}</h5>
 										<p className="card-subtitle text-muted">{elem.release_date.substr(0, 4)} - {elem.vote_average} <span style={{ color : '#FFD600' }}><FontAwesomeIcon size="xs" icon={faStar}/></span></p>
+										{(this.state.seen.indexOf(elem.id.toString()) >= 0)?<p className="badge badge-success">Vu</p>:<p className="badge badge-secondary">Non vu</p>}
 									</div>
 								</div>
 							))}
@@ -230,7 +233,8 @@ const mapStateToProps = state => ({
 	lang : state.user.lang,
 	movies : state.movie.movies,
 	loading : state.movie.loadingList,
-	isLoggedIn : state.user.isLoggedIn
+	isLoggedIn : state.user.isLoggedIn,
+	seen : state.user.seen
 })
 
 const mapDispatchToProps = dispatch => ({

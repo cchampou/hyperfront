@@ -49,6 +49,7 @@ class Play extends Component {
 	}
 
 	componentDidMount () {
+		this.props.markMovieSeen(this.props.match.params.id);
 		this.props.resetComment();
 		this.props.getMovie(this.props.match.params.id);
 		this.props.getCasting(this.props.match.params.id);
@@ -192,7 +193,8 @@ const mapDispatchToProps = dispatch => {
 		getCasting : id => dispatch({ type : actionTypes.GET_CASTING_SAGA, id : id }),
 		submitComment: (comment, videoId) => dispatch(processComment(comment, videoId)),
 		resetComment: () => dispatch(resetComment()),
-		reset : () => dispatch({ type : actionTypes.RESET_MOVIE })
+		reset : () => dispatch({ type : actionTypes.RESET_MOVIE }),
+		markMovieSeen : id => dispatch({ type : actionTypes.MARK_MOVIE_SEEN, id })
 	}
 }
 
