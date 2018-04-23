@@ -160,12 +160,12 @@ class Search extends Component {
 								className="form-control"
 								onChange={this.search}
 								value={this.state.search}
-								placeholder="Rechercher..." />
+								placeholder={lang.search(this.props.lang)} />
 						</form>
-						<h5 className="my-4">Trier par</h5>
-						<span className={((this.state.sort === 'popularity.desc' || this.state.sort === 'popularity.asc')?'text-primary':'text-light')+" btn btn-link"} onClick={this.handleSort.bind(this, 'pop')}>Popularité</span>
-						<span className={((this.state.sort === 'vote_average.desc' || this.state.sort === 'vote_average.asc')?'text-primary':'text-light')+" btn btn-link"} onClick={this.handleSort.bind(this, 'vote')}>Note</span>
-						<span className={((this.state.sort === 'release_date.desc' || this.state.sort === 'release_date.asc')?'text-primary':'text-light')+" btn btn-link"} onClick={this.handleSort.bind(this, 'date')}>Date de sortie</span>
+						<h5 className="my-4">{lang.sort(this.props.lang)}</h5>
+						<span className={((this.state.sort === 'popularity.desc' || this.state.sort === 'popularity.asc')?'text-primary':'text-light')+" btn btn-link"} onClick={this.handleSort.bind(this, 'pop')}>{lang.pop(this.props.lang)}</span>
+						<span className={((this.state.sort === 'vote_average.desc' || this.state.sort === 'vote_average.asc')?'text-primary':'text-light')+" btn btn-link"} onClick={this.handleSort.bind(this, 'vote')}>{lang.note(this.props.lang)}</span>
+						<span className={((this.state.sort === 'release_date.desc' || this.state.sort === 'release_date.asc')?'text-primary':'text-light')+" btn btn-link"} onClick={this.handleSort.bind(this, 'date')}>{lang.date(this.props.lang)}</span>
 						<h5 className="my-4">Genres</h5>
 						{(this.props.lang === 'fr') && this.props.genre_fr.map((e, key) => (
 							<div key={key} className={((this.state.genre === e.id)?'text-primary':'text-light')+" btn btn-link"} onClick={this.selectGenre.bind(this, e.id)} >
@@ -177,7 +177,7 @@ class Search extends Component {
 								<span>{e.name}</span><br />
 							</div>
 						))}
-						<h5 className="my-4">Filtrer par date</h5>
+						<h5 className="my-4">{lang.filterdate(this.props.lang)}</h5>
 						<div className="row">
 							<form onSubmit={this.submitInputs.bind(this)} className="col-6">
 								<input type="number" className="form-control" min="1900" max="2018" step="1" placeholder="min." onChange={this.handleInput} name="dgte" value={this.state.dgte} />
@@ -186,7 +186,7 @@ class Search extends Component {
 								<input type="number" className="form-control" min="1900" max="2018" step="1" placeholder="max." onChange={this.handleInput} name="dlte" value={this.state.dlte} />
 							</form>
 						</div>
-						<h5 className="my-4">Filtrer par note</h5>
+						<h5 className="my-4">{lang.filternote(this.props.lang)}</h5>
 						<div className="row mb-4">
 							<form onSubmit={this.submitInputs.bind(this)} className="col-6">
 								<input type="number" className="form-control" min="0" max="10" step="0.1" placeholder="min." onChange={this.handleInput} name="vgte" value={this.state.vgte} />
@@ -204,7 +204,7 @@ class Search extends Component {
 									<div className="card-body">
 										<h5 className="card-title">{elem.title}</h5>
 										<p className="card-subtitle text-muted">{elem.release_date.substr(0, 4)} - {elem.vote_average} <span style={{ color : '#FFD600' }}><FontAwesomeIcon size="xs" icon={faStar}/></span></p>
-										{(this.state.seen.indexOf(elem.id.toString()) >= 0)?<p className="badge badge-success">Vu</p>:<p className="badge badge-secondary">Non vu</p>}
+										{(this.state.seen.indexOf(elem.id.toString()) >= 0)?<p className="badge badge-success">{lang.seen(this.props.lang)}</p>:<p className="badge badge-secondary">{lang.notseen(this.props.lang)}</p>}
 									</div>
 								</div>
 							))}

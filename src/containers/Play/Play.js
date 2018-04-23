@@ -70,7 +70,6 @@ class Play extends Component {
 	componentWillUnmount (){
 	    this.props.reset();
 		if (this.state.received){
-			socket.emit('deleteStream', this.state.uniqId);
 			this.state.received.destroy();
 		}
 	}
@@ -81,6 +80,7 @@ class Play extends Component {
 		if (this.props.lang !== lang){
 			if (this.state.received) {
                 this.state.received.destroy();
+                console.log("DESTROY EMIT");
                 socket.emit('deleteStream', this.state.uniqId);
             }
 			received = false;
@@ -88,7 +88,6 @@ class Play extends Component {
 		if (this.props.username && this.props.lang && this.props[this.props.lang].title && this.props[this.props.lang].release_date && !received){
             let video = document.getElementById('example-video');
             let movieInfo = lang ? (lang === 'fr'  ? fr : en) : this.props[this.props.lang];
-            let sessionId = uniqid();
 
             if(Hls.isSupported()) {
                 var hls = new Hls({
@@ -99,24 +98,20 @@ class Play extends Component {
                 });
 
 
-                    console.log(movieInfo);
-                hls.loadSource(`http://localhost:3000/video/m3u?id=${sessionId}&name=${movieInfo.title}&year=${parseInt(movieInfo.release_date, 10)}&original=${movieInfo.original_title}&lang=${lang ? lang : this.props.lang}&imdbid=${movieInfo.imdb_id}`);
+                hls.loadSource(`http://localhost:3000/video/m3u?name=${movieInfo.title}&year=${parseInt(movieInfo.release_date, 10)}&original=${movieInfo.original_title}&lang=${lang ? lang : this.props.lang}&imdbid=${movieInfo.imdb_id}`);
                 hls.attachMedia(video);
                 hls.on(Hls.Events.MANIFEST_PARSED,function() {
-                	console.log("PARSED");
                     hls.startLoad(0);
                 });
             }
             else if (video.canPlayType('application/vnd.apple.mpegurl')) {
 
-                video.src = `http://localhost:3000/video/m3u?id=${sessionId}&name=${movieInfo.original_title}`;
+                video.src = `http://localhost:3000/video/m3u?name=${movieInfo.original_title}`;
                 video.addEventListener('canplay', function () {
                 });
             }
-            this.setState({ received : hls , uniqId: sessionId});
+            this.setState({ received : hls});
         }
-        console.log("RECEIVED");
-        console.log(this.props[this.props.lang]);
 
         this.setState({
 			comment,
@@ -128,6 +123,19 @@ class Play extends Component {
 		})
 	}
 
+
+	renderTracks(player){
+		return ["fr", "en"].map((elem, index) => {
+			if (elem && player.props[elem]){
+				let lang = (elem === 'fr' ? 'French' : "English");
+				let movieInfo = player.props[elem];
+
+				return <track key={elem+index} label={lang} kind={'subtitles'} srcLang={elem} src={`http://localhost:3000/video/sub/${movieInfo.imdb_id}_${lang}.vtt`} crossOrigin={'anonymous'}/>
+            } else {
+				return null;
+			}
+		});
+	}
 
 	handleComment = (e) => {
 		this.setState({
@@ -158,8 +166,9 @@ class Play extends Component {
 						</div>
 						<div className="row py-4 my-4 bg-dark">
 							<div className="col">
-								<video id="example-video" style={{ width : '100%' }} controls>
-								</video>
+							<video id="example-video" style={{ width : '100%' }} crossOrigin={'anonymous'} controls>
+								{this.renderTracks(this)}
+							</video>
 								<p className="text-center mt-5">
 									{lang.prepare(this.props.lang)}
 								</p>
