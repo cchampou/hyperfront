@@ -11,6 +11,9 @@ export function* getMoviesSaga( action ) {
         type : actionTypes.LOADING_MOVIES
     });
     try {
+        if (!action.genre) {
+            action.genre = 0;
+        }
         const dgte = (action.dgte)?action.dgte:'1970';
         const dlte = (action.dlte)?action.dlte:'2019';
         const vgte = (action.vgte)?action.vgte:0;
