@@ -44,7 +44,8 @@ class Play extends Component {
 			cast : {
 				crew : [],
 				cast : []
-			}
+			},
+			progress : 0
 		}
 	}
 
@@ -53,6 +54,17 @@ class Play extends Component {
 		this.props.resetComment();
 		this.props.getMovie(this.props.match.params.id);
 		this.props.getCasting(this.props.match.params.id);
+		setInterval(() => {
+			if (this.state.progress < 100) {
+				this.setState({
+					progress : this.state.progress + 1
+				});
+			} else {
+				this.setState({
+					progress : 0
+				});
+			}
+		}, 1000);
 	}
 
 	componentWillUnmount (){
@@ -86,7 +98,7 @@ class Play extends Component {
                 });
 
 
-                hls.loadSource(`http://localhost:3000/video/m3u?name=${movieInfo.title}&year=${parseInt(movieInfo.release_date)}&original=${movieInfo.original_title}&lang=${lang ? lang : this.props.lang}&imdbid=${movieInfo.imdb_id}`);
+                hls.loadSource(`http://localhost:3000/video/m3u?name=${movieInfo.title}&year=${parseInt(movieInfo.release_date, 10)}&original=${movieInfo.original_title}&lang=${lang ? lang : this.props.lang}&imdbid=${movieInfo.imdb_id}`);
                 hls.attachMedia(video);
                 hls.on(Hls.Events.MANIFEST_PARSED,function() {
                     hls.startLoad(0);
@@ -157,6 +169,13 @@ class Play extends Component {
 							<video id="example-video" style={{ width : '100%' }} crossOrigin={'anonymous'} controls>
 								{this.renderTracks(this)}
 							</video>
+								<p className="text-center mt-5">
+									{lang.prepare(this.props.lang)}
+								</p>
+								<h2 className="text-center text-muted my-5">{this.state.progress} %</h2>
+								<div className="progress mb-5">
+									<div className="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow={this.state.progress} aria-valuemin="0" aria-valuemax="100" style={{ width : this.state.progress+'%' }}></div>
+								</div>
 							</div>
 						</div>
 						<div className="row py-4 bg-dark">

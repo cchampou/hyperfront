@@ -12,6 +12,8 @@ import Account from './containers/Account/Account';
 import ResetPass from './containers/ResetPass/ResetPass';
 import Auth from './containers/Auth/Auth';
 import Profile from './containers/Profile/Profile';
+import NewPass from './containers/NewPass/NewPass';
+
 import axios from 'axios';
 
 import bg from './assets/img/bg.jpg'
@@ -76,10 +78,11 @@ class App extends Component {
 	render () {
 		return (
 		<BrowserRouter>
-			<div style={{ minHeight: '100%', position: 'relative', paddingBottom: '60px', backgroundPosition : 'center', backgroundSize : 'cover', backgroundImage : 'url('+this.state.background+')' }}>
+			<div style={{ minHeight: '100%', position: 'relative', paddingBottom: '60px' }}>
 				<Header />
-				<div style={{ backgroundColor : 'rgba(0, 0, 0, 0.5)', position: 'fixed', height : '100%', width: '100%' }}></div>
-				<div style={{ backgroundColor : 'black', opacity: (this.state.hide?'1':'0'), position: 'fixed', height : '100%', width: '100%', transition: 'opacity 0.5s' }}></div>
+				<div style={{ position: 'fixed', backgroundPosition : 'center', backgroundSize : 'cover', height : '100vh', width: '100%', backgroundImage : 'url('+this.state.background+')', marginTop : '-56px' }}></div>
+				<div style={{ backgroundColor : 'rgba(0, 0, 0, 0.5)', position: 'fixed', height : '100vh', width: '100%', marginTop : '-56px' }}></div>
+				<div style={{ backgroundColor : 'black', opacity: (this.state.hide?'1':'0'), position: 'fixed', height : '100%', width: '100%', transition: 'opacity 0.5s', marginTop : '-56px' }}></div>
 				<Switch>
 					<Route path="/" exact component={Search} />
 					<Route path="/play/:id" exact component={Play} />
@@ -88,6 +91,7 @@ class App extends Component {
 					<Route path="/account" exact component={Account} />
 					<Route path="/signup" exact component={Signup} />
 					<Route path="/resetpass" exact component={ResetPass} />
+					<Route path="/newpass/:token" exact component={NewPass} />
 					<Route path="/user/:id" exact component={Profile} />
 				</Switch>
 				<Footer />

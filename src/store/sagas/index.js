@@ -3,7 +3,7 @@ import { takeEvery } from 'redux-saga/effects'
 
 import * as actionTypes from '../actions/actionTypes'
 
-import { loginSaga, loginLocal, logout, autoLoginSaga, externalLoginSaga, resetPassSaga } from './login'
+import { loginSaga, loginLocal, logout, autoLoginSaga, externalLoginSaga, resetPassSaga, newPassSaga } from './login'
 import { signUpSaga } from './signup'
 import { processCommentSaga } from './play'
 import { processAccountSaga, switchLangSaga } from './account'
@@ -28,4 +28,5 @@ export function* sagaWatcher() {
 	yield takeEvery(actionTypes.SWITCH_LANG_SAGA, switchLangSaga);
 	yield takeEvery(actionTypes.GET_COMMENTS_SAGA, getCommentsSaga);
 	yield takeEvery(actionTypes.GET_PROFILE_SAGA, getProfileSaga);
+	yield takeEvery(actionTypes.NEW_PASS_PROCESS, newPassSaga);
 }
