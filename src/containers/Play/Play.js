@@ -100,7 +100,7 @@ class Play extends Component {
 
 
                     console.log(movieInfo);
-                hls.loadSource(`http://localhost:3000/video/m3u?id=${sessionId}&name=${movieInfo.title}&year=${parseInt(movieInfo.release_date)}&original=${movieInfo.original_title}&lang=${lang ? lang : this.props.lang}&imdbid=${movieInfo.imdb_id}`);
+                hls.loadSource(`http://localhost:3000/video/m3u?id=${sessionId}&name=${movieInfo.title}&year=${parseInt(movieInfo.release_date, 10)}&original=${movieInfo.original_title}&lang=${lang ? lang : this.props.lang}&imdbid=${movieInfo.imdb_id}`);
                 hls.attachMedia(video);
                 hls.on(Hls.Events.MANIFEST_PARSED,function() {
                 	console.log("PARSED");

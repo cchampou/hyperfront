@@ -17,6 +17,7 @@ import account from './store/reducers/account';
 import genre from './store/reducers/genre';
 import movie from './store/reducers/movie';
 import profile from './store/reducers/profile';
+import newpass from './store/reducers/newpass';
 
 import { sagaWatcher } from './store/sagas';
 
@@ -29,7 +30,8 @@ const rootReducer = combineReducers({
 	account,
 	genre,
 	movie,
-	profile
+	profile,
+	newpass
 });
 
 const sagaMiddleware = createSagaMiddleware();

@@ -77,3 +77,10 @@ export const RESET_MOVIE = 'RESET_MOVIE';
 export const LOADING_PROFILE = 'LOADING_PROFILE';
 export const GET_PROFILE = 'GET_PROFILE';
 export const GET_PROFILE_SAGA = 'GET_PROFILE_SAGA';
+
+// New pass
+
+export const NEW_PASS_PROCESS = 'NEW_PASS_PROCESS';
+export const NEW_PASS_FAILED = 'NEW_PASS_FAILED';
+export const NEW_PASS_SUCCESS = 'NEW_PASS_SUCCESS';
+export const NEW_PASS_RESET = 'NEW_PASS_RESET';

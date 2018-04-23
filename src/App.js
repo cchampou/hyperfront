@@ -12,6 +12,8 @@ import Account from './containers/Account/Account';
 import ResetPass from './containers/ResetPass/ResetPass';
 import Auth from './containers/Auth/Auth';
 import Profile from './containers/Profile/Profile';
+import NewPass from './containers/NewPass/NewPass';
+
 import axios from 'axios';
 
 import bg from './assets/img/bg.jpg'
@@ -89,6 +91,7 @@ class App extends Component {
 					<Route path="/account" exact component={Account} />
 					<Route path="/signup" exact component={Signup} />
 					<Route path="/resetpass" exact component={ResetPass} />
+					<Route path="/newpass/:token" exact component={NewPass} />
 					<Route path="/user/:id" exact component={Profile} />
 				</Switch>
 				<Footer />
