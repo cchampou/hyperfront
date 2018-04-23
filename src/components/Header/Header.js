@@ -13,7 +13,7 @@ class Header extends Component {
 
 	render() {
 		return (
-			<nav className="navbar navbar-expand-md navbar-dark bg-dark">
+			<nav className="navbar navbar-expand-md navbar-dark bg-dark" style={{ zIndex : '10' }} >
 				<Link className="navbar-brand-name" to="/">H Y P E R T U B E</Link>
 				<button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 					<span className="navbar-toggler-icon"></span>
