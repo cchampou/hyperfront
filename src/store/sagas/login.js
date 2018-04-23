@@ -39,9 +39,10 @@ export function* newPassSaga(action) {
 				password : action.data.password,
 				token : action.data.token
 			});
+			console.log('ok req');
 			yield put({
 				type : actionTypes.NEW_PASS_SUCCESS
-			})
+			});
 		} catch (err) {
 			yield put({
 				type : actionTypes.NEW_PASS_FAILED,
