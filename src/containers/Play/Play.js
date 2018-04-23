@@ -50,27 +50,29 @@ class Play extends Component {
 	}
 
 	componentDidMount () {
-		this.props.markMovieSeen(this.props.match.params.id);
-		this.props.resetComment();
-		this.props.getMovie(this.props.match.params.id);
-		this.props.getCasting(this.props.match.params.id);
-		setInterval(() => {
-			if (this.state.progress < 100) {
-				this.setState({
-					progress : this.state.progress + 1
-				});
-			} else {
-				this.setState({
-					progress : 0
-				});
-			}
-		}, 1000);
-	}
+        this.props.markMovieSeen(this.props.match.params.id);
+        this.props.resetComment();
+        this.props.getMovie(this.props.match.params.id);
+        this.props.getCasting(this.props.match.params.id);
+        // setInterval(() => {
+        // 	if (this.state.progress < 100) {
+        // 		this.setState({
+        // 			progress : this.state.progress + 1
+        // 		});
+        // 	} else {
+        // 		this.setState({
+        // 			progress : 0
+        // 		});
+        // 	}
+        // }, 1000);
+        socket.on('downloading', percentage => this.setState({progress: Math.round(percentage)}));
+    }
 
 	componentWillUnmount (){
 	    this.props.reset();
 		if (this.state.received){
-			this.state.received.destroy();
+            this.state.received.destroy();
+			socket.emit('destroyStream', null);
 		}
 	}
 
@@ -79,15 +81,17 @@ class Play extends Component {
 
 		if (this.props.lang !== lang){
 			if (this.state.received) {
+				console.log("DESROY HERE");
                 this.state.received.destroy();
-                console.log("DESTROY EMIT");
                 socket.emit('deleteStream', this.state.uniqId);
             }
 			received = false;
 		}
+
 		if (this.props.username && this.props.lang && this.props[this.props.lang].title && this.props[this.props.lang].release_date && !received){
             let video = document.getElementById('example-video');
             let movieInfo = lang ? (lang === 'fr'  ? fr : en) : this.props[this.props.lang];
+
 
             if(Hls.isSupported()) {
                 var hls = new Hls({
