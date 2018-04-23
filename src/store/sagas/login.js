@@ -24,6 +24,32 @@ export function* resetPassSaga(action) {
 	}
 }
 
+export function* newPassSaga(action) {
+	yield put({
+		type : actionTypes.NEW_PASS_RESET
+	})
+	if (action.data.password !== action.data.confirmation) {
+		yield put({
+			type : actionTypes.NEW_PASS_FAILED,
+			msg : "Le mot de passe et sa confirmation ne correspondent pas"
+		});
+	} else {
+		try {
+			yield axios.post(config.api_url+'/user/reset', {
+				password : action.data.password,
+				token : action.data.token
+			});
+			yield put({
+				type : actionTypes.NEW_PASS_SUCCESS
+			})
+		} catch (err) {
+			yield put({
+				type : actionTypes.NEW_PASS_FAILED,
+				msg : err.response.data
+			})
+		}
+	}
+}
 
 export function* loginSaga(action) {
 	yield put({

@@ -213,8 +213,8 @@ class Search extends Component {
 						<Loading />:null}
 					</div>
 				</div>
-				:<div className="row justify-content-center align-items-center" style={{ marginTop : '20%' }}>
-					<div className="col-4 text-center bg-dark p-4">
+				:<div className="row justify-content-center align-items-center" style={{ marginTop : '50vh', transform : 'translateY(-75%)' }}>
+					<div className="col-lg-4 col-md-8 col-sm-12 text-center bg-dark p-4">
 						<h1 className="text-center">HyperTube</h1>
 						<h2 className="text-center text-muted">{lang.slogan(this.props.lang)}</h2>
 						<Link to="/login" className="btn btn-primary my-2 form-control">{lang.login(this.props.lang)}</Link><br />

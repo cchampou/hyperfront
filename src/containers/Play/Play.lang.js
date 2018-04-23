@@ -14,3 +14,7 @@ export const comments = lang => (
 export const nocom = lang => (
     (lang === 'fr')?"Aucun commentaire":"No comment"
 )
+
+export const prepare = lang => (
+    (lang === 'fr')?"Préparation de votre film en cours, veuillez patienter ...":"Preparing your movie, please wait ..."
+)

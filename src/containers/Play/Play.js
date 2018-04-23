@@ -44,7 +44,8 @@ class Play extends Component {
 			cast : {
 				crew : [],
 				cast : []
-			}
+			},
+			progress : 0
 		}
 	}
 
@@ -53,6 +54,17 @@ class Play extends Component {
 		this.props.resetComment();
 		this.props.getMovie(this.props.match.params.id);
 		this.props.getCasting(this.props.match.params.id);
+		setInterval(() => {
+			if (this.state.progress < 100) {
+				this.setState({
+					progress : this.state.progress + 1
+				});
+			} else {
+				this.setState({
+					progress : 0
+				});
+			}
+		}, 1000);
 	}
 
 	componentWillUnmount (){
@@ -64,22 +76,31 @@ class Play extends Component {
 	}
 
 	componentWillReceiveProps ( { comment, fail, success, fr, en, lang, cast_en, cast_fr, comments, username } ) {
+		let received = this.state.received;
 
-		if (this.props.username && this.props.lang && this.props[this.props.lang].title && this.props[this.props.lang].release_date && !this.state.received){
+		if (this.props.lang !== lang){
+			if (this.state.received) {
+                this.state.received.destroy();
+                socket.emit('deleteStream', this.state.uniqId);
+            }
+			received = false;
+		}
+		if (this.props.username && this.props.lang && this.props[this.props.lang].title && this.props[this.props.lang].release_date && !received){
             let video = document.getElementById('example-video');
-            let movieInfo = this.props[this.props.lang];
+            let movieInfo = lang ? (lang === 'fr'  ? fr : en) : this.props[this.props.lang];
             let sessionId = uniqid();
 
             if(Hls.isSupported()) {
                 var hls = new Hls({
-                    manifestLoadingTimeOut: 480000,
+					enableWebVTT: true,
+                    manifestLoadingTimeOut: 600000,
                     manifestLoadingMaxRetry: 2,
                     autoStartLoad: false
                 });
 
 
-                    console.log(this.props[this.props.lang]);
-                hls.loadSource(`http://localhost:3000/video/m3u?id=${sessionId}&name=${movieInfo.title} ${parseInt(movieInfo.release_date, 10)}`);
+                    console.log(movieInfo);
+                hls.loadSource(`http://localhost:3000/video/m3u?id=${sessionId}&name=${movieInfo.title}&year=${parseInt(movieInfo.release_date, 10)}&original=${movieInfo.original_title}&lang=${lang ? lang : this.props.lang}&imdbid=${movieInfo.imdb_id}`);
                 hls.attachMedia(video);
                 hls.on(Hls.Events.MANIFEST_PARSED,function() {
                 	console.log("PARSED");
@@ -88,7 +109,7 @@ class Play extends Component {
             }
             else if (video.canPlayType('application/vnd.apple.mpegurl')) {
 
-                video.src = `http://localhost:3000/video/m3u?id=${sessionId}&name=${movieInfo.title}`;
+                video.src = `http://localhost:3000/video/m3u?id=${sessionId}&name=${movieInfo.original_title}`;
                 video.addEventListener('canplay', function () {
                 });
             }
@@ -137,8 +158,15 @@ class Play extends Component {
 						</div>
 						<div className="row py-4 my-4 bg-dark">
 							<div className="col">
-							<video id="example-video" style={{ width : '100%' }} controls>
-							</video>
+								<video id="example-video" style={{ width : '100%' }} controls>
+								</video>
+								<p className="text-center mt-5">
+									{lang.prepare(this.props.lang)}
+								</p>
+								<h2 className="text-center text-muted my-5">{this.state.progress} %</h2>
+								<div className="progress mb-5">
+									<div className="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow={this.state.progress} aria-valuemin="0" aria-valuemax="100" style={{ width : this.state.progress+'%' }}></div>
+								</div>
 							</div>
 						</div>
 						<div className="row py-4 bg-dark">

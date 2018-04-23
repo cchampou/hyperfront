@@ -1,10 +1,11 @@
 import React from 'react'
 import Button from '../Utils/Button'
+import * as lang from './Comment.lang'
 
 const Comment = ( props ) => (
 	<form onSubmit={(e) => { e.preventDefault(); props.submitComment(props.comment, props.videoId); } } >
 		<div className="form-group">
-			<label htmlFor="comment">Mon commentaire :</label>
+			<label htmlFor="comment">{lang.title(props.lang)}</label>
 			<input
 				type="text"
 				name="comment"
@@ -15,14 +16,14 @@ const Comment = ( props ) => (
 		</div>
 		{props.fail &&
 		<p className="alert alert-danger">
-			Echec de la creation du commentaire
+			{lang.fail(props.lang)}
 		</p>}
 		{props.success &&
 		<p className="alert alert-success">
-			Le commentaire a été posté avec succès
+			{lang.ok(props.lang)}
 		</p>}
 		<div className="form-group text-center">
-			<Button text="Envoyer" loading={props.loading} />
+			<Button text={lang.submit(props.lang)} loading={props.loading} />
 		</div>
 	</form>
 )
