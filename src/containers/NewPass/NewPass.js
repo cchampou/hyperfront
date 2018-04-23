@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-
+import { Link } from 'react-router-dom';
 import * as lang from './NewPass.lang'
 
 import * as actionTypes from '../../store/actions/actionTypes'
@@ -38,6 +38,7 @@ class NewPass extends Component {
                                 <input type="password" name="confirmation" onChange={this.handleInput.bind(this)} className="form-control"/>
                             </div>
                             {this.props.fail && <p className="alert alert-danger">{this.props.fail}</p>}
+                            {this.props.success && <p className="alert alert-success">Success ! <Link to="/login">Revenir à la page de login</Link></p>}
                             <input type="submit" className="btn btn-primary" value={lang.submit(this.props.lang)} />
                         </form>
                     </div>
@@ -51,7 +52,8 @@ class NewPass extends Component {
 
 const mapStateToProps = state => ({
     lang : state.user.lang,
-    fail : state.newpass.fail
+    fail : state.newpass.fail,
+    success : state.newpass.success
 })
 
 const mapDispatchToProps = disptach => ({
