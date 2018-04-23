@@ -44,7 +44,8 @@ class Play extends Component {
 			cast : {
 				crew : [],
 				cast : []
-			}
+			},
+			progress : 0
 		}
 	}
 
@@ -53,6 +54,17 @@ class Play extends Component {
 		this.props.resetComment();
 		this.props.getMovie(this.props.match.params.id);
 		this.props.getCasting(this.props.match.params.id);
+		setInterval(() => {
+			if (this.state.progress < 100) {
+				this.setState({
+					progress : this.state.progress + 1
+				});
+			} else {
+				this.setState({
+					progress : 0
+				});
+			}
+		}, 1000);
 	}
 
 	componentWillUnmount (){
@@ -137,8 +149,15 @@ class Play extends Component {
 						</div>
 						<div className="row py-4 my-4 bg-dark">
 							<div className="col">
-							<video id="example-video" style={{ width : '100%' }} controls>
-							</video>
+								<video id="example-video" style={{ width : '100%' }} controls>
+								</video>
+								<p className="text-center mt-5">
+									{lang.prepare(this.props.lang)}
+								</p>
+								<h2 className="text-center text-muted my-5">{this.state.progress} %</h2>
+								<div className="progress mb-5">
+									<div className="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow={this.state.progress} aria-valuemin="0" aria-valuemax="100" style={{ width : this.state.progress+'%' }}></div>
+								</div>
 							</div>
 						</div>
 						<div className="row py-4 bg-dark">

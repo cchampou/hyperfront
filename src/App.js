@@ -76,10 +76,11 @@ class App extends Component {
 	render () {
 		return (
 		<BrowserRouter>
-			<div style={{ minHeight: '100%', position: 'relative', paddingBottom: '60px', backgroundPosition : 'center', backgroundSize : 'cover', backgroundImage : 'url('+this.state.background+')' }}>
+			<div style={{ minHeight: '100%', position: 'relative', paddingBottom: '60px' }}>
 				<Header />
-				<div style={{ backgroundColor : 'rgba(0, 0, 0, 0.5)', position: 'fixed', height : '100%', width: '100%' }}></div>
-				<div style={{ backgroundColor : 'black', opacity: (this.state.hide?'1':'0'), position: 'fixed', height : '100%', width: '100%', transition: 'opacity 0.5s' }}></div>
+				<div style={{ position: 'fixed', backgroundPosition : 'center', backgroundSize : 'cover', height : '100vh', width: '100%', backgroundImage : 'url('+this.state.background+')', marginTop : '-56px' }}></div>
+				<div style={{ backgroundColor : 'rgba(0, 0, 0, 0.5)', position: 'fixed', height : '100vh', width: '100%', marginTop : '-56px' }}></div>
+				<div style={{ backgroundColor : 'black', opacity: (this.state.hide?'1':'0'), position: 'fixed', height : '100%', width: '100%', transition: 'opacity 0.5s', marginTop : '-56px' }}></div>
 				<Switch>
 					<Route path="/" exact component={Search} />
 					<Route path="/play/:id" exact component={Play} />
