@@ -2,10 +2,10 @@ import React from 'react';
 
 import './Footer.css';
 
-const Footer = ( props ) => (
+const Footer = (props) => (
 	<footer className="navbar navbar-dark bg-dark">
 		<span className="navbar-text m-auto">
-			Par BBRANDT, CCHAMPOU, GAROUCHE et ORAZAFIN
+			Copyright © 2018 Hypertube.com - All Rights Reserved. By bbrandt, cchampou, garouche and orazafin
 		</span>
 	</footer>
 )
