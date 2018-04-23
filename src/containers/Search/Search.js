@@ -67,7 +67,7 @@ class Search extends Component {
 		if (next.lang !== this.props.lang) {
 			this.props.resetMovies();
 		}
-		if (next.page < 10) {
+		if (next.page < 50) {
 			this.handleScroll();
 		}
 	}
@@ -196,7 +196,7 @@ class Search extends Component {
 							</form>
 						</div>
 					</div>
-					<div className="col-lg-10 col-md-9 col-sm-8">
+					<div className="col-lg-10 col-md-9 col-sm-8 text-center">
 						<div className="row justify-content-center">
 							{this.state.movies.map((elem, key) => (
 								<div onClick={this.select.bind(this, elem.id)} className="card m-2" style={{ width: '10rem', cursor: 'pointer' }} key={key} >
@@ -210,7 +210,7 @@ class Search extends Component {
 							))}
 						</div>
 						{(this.state.loading)?
-						<Loading />:null}
+						<Loading text={lang.load(this.props.lang)} />:null}
 					</div>
 				</div>
 				:<div className="row justify-content-center align-items-center" style={{ marginTop : '50vh', transform : 'translateY(-75%)' }}>
