@@ -14,7 +14,7 @@ import Auth from './containers/Auth/Auth';
 import Profile from './containers/Profile/Profile';
 import axios from 'axios';
 
-
+import bg from './assets/img/bg.jpg'
 
 import './App.css';
 
@@ -28,38 +28,49 @@ class App extends Component {
 		}	
 	}
 
-	randomize = () => {
+	randomize = (on = false) => {
 		this.setState({
 			hide : true
 		});
-		axios.get('https://api.unsplash.com/photos/random?query=movie', {
-			headers : {
-				'Authorization' : 'Client-ID 4f8ab43cc45f8952da4850f074dfc89bc8e3bf6c4da619bea8d6c9b4a68544a3'
-			}
-		}).then((res) => {
+		if (on) {
+			axios.get('https://api.unsplash.com/photos/random?query=movie', {
+				headers : {
+					'Authorization' : 'Client-ID 4f8ab43cc45f8952da4850f074dfc89bc8e3bf6c4da619bea8d6c9b4a68544a3'
+				}
+			}).then((res) => {
+				this.setState({
+					background : res.data.urls.full
+				});
+				setTimeout(() => {
+					this.setState({
+						hide : false
+					})
+				}, 1000);
+			}).catch((err) => {
+				this.setState({
+					background : bg
+				});
+				setTimeout(() => {
+					this.setState({
+						hide : false
+					})
+				}, 1000);
+			})
+		} else {
 			this.setState({
-				background : res.data.urls.full
+				background : bg
 			});
 			setTimeout(() => {
 				this.setState({
 					hide : false
 				})
 			}, 1000);
-		}).catch((err) => {
-			this.setState({
-				background : 'https://images.unsplash.com/photo-1521967906867-14ec9d64bee8?ixlib=rb-0.3.5&q=85&fm=jpg&crop=entropy&cs=srgb&ixid=eyJhcHBfaWQiOjI1MTMwfQ&s=381aec77987962586079df5424386844'
-			});
-			setTimeout(() => {
-				this.setState({
-					hide : false
-				})
-			}, 1000);
-		})
+		}
 	}
 
 	componentDidMount() {
-		this.randomize();
-		setInterval(() => this.randomize(), 20000);
+		this.randomize(true);
+		setInterval(() => this.randomize(true), 60000);
 	}
 
 	render () {
