@@ -17,9 +17,6 @@ import Comment from '../../components/Play/Comment'
 
 import Hls from 'hls.js';
 
-
-import uniqid from 'uniqid';
-
 import io from 'socket.io-client';
 
 const socket = io('http://localhost:3000');
@@ -36,6 +33,7 @@ class Play extends Component {
 			casting : 'Franck Gastambide, Malik Bentalha, Bernard Farcy',
 			received: false,
 			uniqId: null,
+			subList: [],
 			comments : [],
 			details : {
 				poster_path : '',
@@ -45,7 +43,8 @@ class Play extends Component {
 				crew : [],
 				cast : []
 			},
-			progress : 0
+			downloading : 0,
+			converting: 0
 		}
 	}
 
@@ -54,18 +53,12 @@ class Play extends Component {
         this.props.resetComment();
         this.props.getMovie(this.props.match.params.id);
         this.props.getCasting(this.props.match.params.id);
-        // setInterval(() => {
-        // 	if (this.state.progress < 100) {
-        // 		this.setState({
-        // 			progress : this.state.progress + 1
-        // 		});
-        // 	} else {
-        // 		this.setState({
-        // 			progress : 0
-        // 		});
-        // 	}
-        // }, 1000);
-        socket.on('downloading', percentage => this.setState({progress: Math.round(percentage)}));
+
+        socket.on('downloading', percentage => this.setState({downloading: Math.round(percentage)}));
+        socket.on('converting', percentage => this.setState({converting: Math.round(percentage)}));
+        socket.on('subList', list => {
+        	this.setState({subList: list})
+		});
     }
 
 	componentWillUnmount (){
@@ -74,6 +67,9 @@ class Play extends Component {
             this.state.received.destroy();
 			socket.emit('destroyStream', null);
 		}
+        socket.removeListener('downloading');
+        socket.removeListener('converting');
+        socket.removeListener('subList');
 	}
 
 	componentWillReceiveProps ( { comment, fail, success, fr, en, lang, cast_en, cast_fr, comments, username } ) {
@@ -92,7 +88,7 @@ class Play extends Component {
             let video = document.getElementById('example-video');
             let movieInfo = lang ? (lang === 'fr'  ? fr : en) : this.props[this.props.lang];
 
-
+            socket.emit('getSubs', movieInfo.imdb_id);
             if(Hls.isSupported()) {
                 var hls = new Hls({
 					enableWebVTT: true,
@@ -129,16 +125,23 @@ class Play extends Component {
 
 
 	renderTracks(player){
-		return ["fr", "en"].map((elem, index) => {
-			if (elem && player.props[elem]){
-				let lang = (elem === 'fr' ? 'French' : "English");
-				let movieInfo = player.props[elem];
+		console.log(player);
+		if (this.state.subList) {
+            return this.state.subList.map((elem, index) => {
+                if (elem && player.props[elem]) {
+                    let lang = (elem === 'fr' ? 'French' : "English");
+                    let movieInfo = player.props[elem];
 
-				return <track key={elem+index} label={lang} kind={'subtitles'} srcLang={elem} src={`http://localhost:3000/video/sub/${movieInfo.imdb_id}_${lang}.vtt`} crossOrigin={'anonymous'}/>
-            } else {
-				return null;
-			}
-		});
+                    return <track key={elem + index} label={lang} kind={'subtitles'} srcLang={elem}
+								  src={`http://localhost:3000/video/sub/${movieInfo.imdb_id}_${lang}.vtt`}
+								  crossOrigin={'anonymous'}/>
+                } else {
+                    return null;
+                }
+            });
+        } else {
+			return null;
+		}
 	}
 
 	handleComment = (e) => {
@@ -148,6 +151,9 @@ class Play extends Component {
 	}
 
 	render () {
+		let visibility = !(this.state.converting >= 100);
+		let value = (this.state.converting ? this.state.converting : this.state.downloading);
+
 		return (
 			<div className="container">
 				<div className="row my-4">
@@ -170,15 +176,17 @@ class Play extends Component {
 						</div>
 						<div className="row py-4 my-4 bg-dark">
 							<div className="col">
-							<video id="example-video" style={{ width : '100%' }} crossOrigin={'anonymous'} controls>
+							<video id="example-video" style={{ width : '100%' }} crossOrigin={'anonymous'} hidden={visibility} controls>
 								{this.renderTracks(this)}
 							</video>
+								<div hidden={!visibility}>
 								<p className="text-center mt-5">
-									{lang.prepare(this.props.lang)}
+									{lang.prepare(this.props.lang) + (this.state.converting ? ' 2' : ' 1')}/2
 								</p>
-								<h2 className="text-center text-muted my-5">{this.state.progress} %</h2>
+								<h2 className="text-center text-muted my-5">{value} %</h2>
 								<div className="progress mb-5">
-									<div className="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow={this.state.progress} aria-valuemin="0" aria-valuemax="100" style={{ width : this.state.progress+'%' }}></div>
+									<div className="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow={value} aria-valuemin="0" aria-valuemax="100" style={{ width : value + '%' }}></div>
+								</div>
 								</div>
 							</div>
 						</div>
