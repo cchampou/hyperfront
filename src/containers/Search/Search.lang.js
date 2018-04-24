@@ -46,3 +46,7 @@ export const date = lang => (
 export const search = lang => (
     (lang === 'fr')?"Rechercher...":"Search..."
 )
+
+export const load = lang => (
+    (lang === 'fr')?"Recherche des films disponibles ...":"Loading avalaible films ..."
+)
